@@ -42,7 +42,7 @@ public class NjuAccountAuthenticatorTest extends ApplicationTestCase<NjuApplicat
      * Check if bundle is implemented in right way
      */
     public void testAddAccountIsBundleValid() throws NetworkErrorException {
-        
+
         Bundle bundle = authenticator.addAccount( null, null, null, null, null );
 
         // More or less accurate
