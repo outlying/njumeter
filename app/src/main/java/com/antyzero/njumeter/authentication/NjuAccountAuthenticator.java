@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 /**
- * Created by tornax on 29.08.14.
+ *
  */
 public class NjuAccountAuthenticator extends AbstractAccountAuthenticator {
 
