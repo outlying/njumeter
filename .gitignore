@@ -25,3 +25,6 @@ proguard/
 # Android Studio
 *.iml
 .idea/
+
+# Crashlytics
+crashlytics.properties
