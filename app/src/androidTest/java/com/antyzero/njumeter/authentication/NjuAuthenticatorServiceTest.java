@@ -15,7 +15,7 @@ public class NjuAuthenticatorServiceTest extends ServiceTestCase<NjuAuthenticato
     }
 
     /**
-     * Bind testing
+     * Test binding
      */
     public void testBind() {
         assertThat(bindService(new Intent())).isNotNull();
