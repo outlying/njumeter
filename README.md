@@ -1,4 +1,4 @@
-NjuMeter [![Build Status on Travis:](https://api.travis-ci.org/outlying/njumeter.png)](https://travis-ci.org/outlying/njumeter)
+NjuMeter [![Build Status](https://travis-ci.org/outlying/njumeter.svg?branch=master)](https://travis-ci.org/outlying/njumeter)
 ========
 
 Support application for NjuMobile, mobile network operator
