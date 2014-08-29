@@ -1,13 +1,19 @@
 package com.antyzero.njumeter;
 
-import android.app.Application;
 import android.test.ApplicationTestCase;
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * Test proper application setup and creation
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
+public class ApplicationTest extends ApplicationTestCase<NjuApplication> {
+
     public ApplicationTest() {
-        super(Application.class);
+        super(NjuApplication.class);
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        createApplication();
     }
 }
