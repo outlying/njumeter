@@ -28,3 +28,4 @@ proguard/
 
 # Crashlytics
 crashlytics.properties
+app/src/main/res/values/com_crashlytics_export_strings.xml
