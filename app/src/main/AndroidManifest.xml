@@ -22,6 +22,18 @@
 
         <meta-data android:name="com.crashlytics.ApiKey" android:value="73d09258d53c22be775335da98919e7ce89805ec"/>
 
+        <service
+            android:name=".authentication.NjuAuthenticatorService"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
     </application>
 
 </manifest>
