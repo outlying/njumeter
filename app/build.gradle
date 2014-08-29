@@ -41,6 +41,9 @@ android {
 
         versionCode 800
         versionName "2.0.0"
+
+        resConfigs "pl"
+        resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
     }
 
     buildTypes {
