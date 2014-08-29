@@ -22,5 +22,12 @@ android {
 }
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    /**
+     * Testing
+     */
+
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
 }
