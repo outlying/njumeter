@@ -54,13 +54,13 @@ public class NjuAccountAuthenticator extends AbstractAccountAuthenticator {
 
         // Extract the username and password from the Account Manager, and ask
         // the server for an appropriate AuthToken.
-        final AccountManager am = AccountManager.get( context );
+        final AccountManager accountManager = AccountManager.get( context );
 
-        String authToken = am.peekAuthToken( account, authTokenType );
+        String authToken = accountManager.peekAuthToken( account, authTokenType );
 
         // Lets give another try to authenticate the user
         if( TextUtils.isEmpty( authToken ) ) {
-            final String password = am.getPassword( account );
+            final String password = accountManager.getPassword( account );
             if( password != null ) {
                 // authToken = sServerAuthenticate.userSignIn(account.name, password, authTokenType);
             }
