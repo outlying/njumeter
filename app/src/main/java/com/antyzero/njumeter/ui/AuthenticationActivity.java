@@ -7,7 +7,7 @@ import android.os.Bundle;
 /**
  * Provides authentication form
  */
-public class AuthenticationActivity extends Activity {
+public class AuthenticationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
 
@@ -32,7 +32,6 @@ public class MainActivity extends Activity {
 
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Konto nie utworzone", Toast.LENGTH_SHORT).show();
-                finish();
             }
         }
     }
