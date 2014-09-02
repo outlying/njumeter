@@ -20,6 +20,10 @@ repositories {
     maven { url 'http://download.crashlytics.com/maven' }
 }
 
+lintCleaner {
+    exclude = ['com_crashlytics_export_strings.xml','config.xml']
+}
+
 android {
 
     packagingOptions {
