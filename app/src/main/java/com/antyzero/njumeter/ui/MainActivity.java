@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
 
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Konto nie utworzone", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }
