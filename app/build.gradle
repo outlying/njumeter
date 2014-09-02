@@ -7,12 +7,14 @@ buildscript {
     dependencies {
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.11.4'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
+        classpath 'com.droidtitan:lint-cleaner-plugin:0.3.0'
     }
 }
 
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
+apply plugin: 'com.droidtitan.lintcleaner'
 
 repositories {
     maven { url 'http://download.crashlytics.com/maven' }
