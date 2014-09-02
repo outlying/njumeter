@@ -3,6 +3,7 @@
     package="com.antyzero.njumeter" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
         android:name=".NjuApplication"
@@ -19,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.AuthenticationActivity"
+            android:label="@string/title_activity_authentication"/>
 
         <meta-data android:name="com.crashlytics.ApiKey" android:value="73d09258d53c22be775335da98919e7ce89805ec"/>
 

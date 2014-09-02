@@ -1,11 +1,11 @@
 package com.antyzero.njumeter.ui;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
-import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends Activity {
 
@@ -13,5 +13,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Check if we have at least one account, if not redirect user to login screen
+        if (AccountManager.get(this).getAccountsByType(BuildConfig.ACCOUNT_TYPE).length == 0) {
+            AuthenticationActivity.start(this);
+        }
     }
 }

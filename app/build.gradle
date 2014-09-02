@@ -50,6 +50,8 @@ android {
 
         resConfigs "pl"
         resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
+
+        buildConfigField "String", "ACCOUNT_TYPE", "\"com.antyzero.njumeter.account\""
     }
 
     buildTypes {
