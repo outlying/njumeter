@@ -9,8 +9,6 @@ import android.os.Bundle;
  */
 public class AuthenticationActivity extends Activity {
 
-    public static final int REQUEST_CODE = 31819;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +19,10 @@ public class AuthenticationActivity extends Activity {
      *
      * @param activity
      */
-    public static void start(Activity activity){
+    public static void start(Activity activity, int requestCode) {
 
         Intent intent = new Intent(activity, AuthenticationActivity.class);
 
-        activity.startActivityForResult(intent, REQUEST_CODE, Bundle.EMPTY);
+        activity.startActivityForResult(intent, requestCode);
     }
 }
