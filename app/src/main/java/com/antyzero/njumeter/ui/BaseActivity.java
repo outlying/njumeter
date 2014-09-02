@@ -8,7 +8,7 @@ import com.octo.android.robospice.SpiceManager;
 /**
  * Created by tornax on 02.09.14.
  */
-public class BaseActivity extends Activity {
+class BaseActivity extends Activity {
 
     private SpiceManager spiceManager = new SpiceManager(SpiceService.class);
 
