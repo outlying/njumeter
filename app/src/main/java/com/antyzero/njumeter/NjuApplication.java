@@ -13,6 +13,7 @@ public class NjuApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // For non debug builds use Crashlytics reports
         if(!BuildConfig.DEBUG) {
             Crashlytics.start(this);
         }
