@@ -15,4 +15,16 @@ class BaseActivity extends Activity {
     protected SpiceManager getSpiceManager() {
         return spiceManager;
     }
+
+    /**
+     *
+     *
+     * @param viewId
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    protected <T> T findView(int viewId){
+        return (T) findViewById(viewId);
+    }
 }
