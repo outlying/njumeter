@@ -3,10 +3,13 @@ package com.antyzero.njumeter.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.antyzero.njumeter.R;
+import com.antyzero.njumeter.tools.SimpleTextWatcher;
 
 /**
  * Provides authentication form
@@ -25,6 +28,9 @@ public class AuthenticationActivity extends BaseActivity {
         button = findView(R.id.button);
 
         editTextUser = findView(R.id.editTextUser);
+        editTextUser.addTextChangedListener(new UserTextWatcher());
+
+        editTextPassword.addTextChangedListener(new PasswordTextWatcher());
         editTextPassword = findView(R.id.editTextPassword);
     }
 
@@ -38,5 +44,31 @@ public class AuthenticationActivity extends BaseActivity {
         Intent intent = new Intent(activity, AuthenticationActivity.class);
 
         activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * Watching user / login / phone number EditText
+     */
+    private class UserTextWatcher extends SimpleTextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+            final boolean validLength = s.length() >= 9;
+
+            editTextPassword.setEnabled(validLength);
+        }
+    }
+
+    /**
+     * Watching password EditText
+     */
+    private class PasswordTextWatcher extends SimpleTextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+            button.setEnabled(!TextUtils.isEmpty(s));
+        }
     }
 }
