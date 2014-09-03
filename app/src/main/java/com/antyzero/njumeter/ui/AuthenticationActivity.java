@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.antyzero.njumeter.R;
 
@@ -13,6 +14,8 @@ import com.antyzero.njumeter.R;
 public class AuthenticationActivity extends BaseActivity {
 
     private Button button;
+    private EditText editTextUser;
+    private EditText editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,9 @@ public class AuthenticationActivity extends BaseActivity {
         setContentView(R.layout.activity_authentication);
 
         button = findView(R.id.button);
+
+        editTextUser = findView(R.id.editTextUser);
+        editTextPassword = findView(R.id.editTextPassword);
     }
 
     /**
