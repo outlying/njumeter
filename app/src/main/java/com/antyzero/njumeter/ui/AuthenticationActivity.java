@@ -30,8 +30,8 @@ public class AuthenticationActivity extends BaseActivity {
         editTextUser = findView(R.id.editTextUser);
         editTextUser.addTextChangedListener(new UserTextWatcher());
 
-        editTextPassword.addTextChangedListener(new PasswordTextWatcher());
         editTextPassword = findView(R.id.editTextPassword);
+        editTextPassword.addTextChangedListener(new PasswordTextWatcher());
     }
 
     /**
