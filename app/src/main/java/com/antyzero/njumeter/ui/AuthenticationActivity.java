@@ -52,9 +52,9 @@ public class AuthenticationActivity extends BaseActivity {
     private class UserTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(Editable editable) {
 
-            final boolean validLength = s.length() >= 9;
+            final boolean validLength = editable.length() >= 9;
 
             editTextPassword.setEnabled(validLength);
         }
@@ -66,9 +66,9 @@ public class AuthenticationActivity extends BaseActivity {
     private class PasswordTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(Editable editable) {
 
-            button.setEnabled(!TextUtils.isEmpty(s));
+            button.setEnabled(!TextUtils.isEmpty(editable));
         }
     }
 }
