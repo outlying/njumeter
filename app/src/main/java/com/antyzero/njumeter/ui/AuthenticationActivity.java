@@ -16,9 +16,9 @@ import com.antyzero.njumeter.tools.SimpleTextWatcher;
  */
 public class AuthenticationActivity extends BaseActivity {
 
-    private Button button;
-    private EditText editTextUser;
-    private EditText editTextPassword;
+    Button button;
+    EditText editTextUser;
+    EditText editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
