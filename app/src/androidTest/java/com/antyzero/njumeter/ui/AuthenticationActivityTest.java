@@ -2,6 +2,7 @@ package com.antyzero.njumeter.ui;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.text.TextUtils;
 
 import static org.assertj.android.api.Assertions.assertThat;
 
@@ -40,5 +41,16 @@ public class AuthenticationActivityTest extends ActivityInstrumentationTestCase2
         getActivity().editTextPassword.setText("password");
 
         assertThat(getActivity().button).isEnabled();
+
+
+        // ------- Disable, go back ----------
+
+        getActivity().editTextPassword.setText("");
+
+        assertThat(getActivity().button).isDisabled();
+
+        getActivity().editTextUser.setText("");
+
+        assertThat(getActivity().editTextPassword).isDisabled();
     }
 }
