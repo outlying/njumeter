@@ -3,12 +3,18 @@ package com.antyzero.njumeter.network.request;
 import com.antyzero.njumeter.network.Url;
 
 /**
- * Created by tornax on 04.09.14.
+ *
  */
 public class LoginRequest extends BaseRequest<Void> {
 
-    public LoginRequest() {
+    private final String user;
+    private final String password;
+
+    public LoginRequest(String user, String password) {
         super(Void.class);
+
+        this.user = user;
+        this.password = password;
     }
 
     @Override
@@ -16,7 +22,7 @@ public class LoginRequest extends BaseRequest<Void> {
 
         String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
 
-        
+
 
         return null;
     }
