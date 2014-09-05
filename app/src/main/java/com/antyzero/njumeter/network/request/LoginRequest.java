@@ -7,10 +7,10 @@ import com.antyzero.njumeter.network.Url;
  */
 public class LoginRequest extends BaseRequest<Void> {
 
-    private final String user;
-    private final String password;
+    private final CharSequence user;
+    private final CharSequence password;
 
-    public LoginRequest(String user, String password) {
+    public LoginRequest(CharSequence user, CharSequence password) {
         super(Void.class);
 
         this.user = user;

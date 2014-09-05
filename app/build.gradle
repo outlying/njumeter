@@ -68,8 +68,18 @@ android {
 
 dependencies {
 
+    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.3'
     compile 'com.octo.android.robospice:robospice-spring-android:1.4.12'
+
+    compile 'com.squareup.dagger:dagger:1.2.2'
+
+    compile 'de.greenrobot:eventbus:2.2.1'
+
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.4') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
 
     compile 'com.crashlytics.android:crashlytics:1.1.11'
 
