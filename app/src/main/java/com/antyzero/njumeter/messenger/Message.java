@@ -5,41 +5,48 @@ package com.antyzero.njumeter.messenger;
  */
 public class Message {
 
-    private String message;
+    private CharSequence text;
     private Type type;
 
     /**
      *
      */
     private Message(){
+    }
 
+    public CharSequence getText() {
+        return text;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     /**
      *
      *
-     * @param message
+     * @param text
      * @return
      */
-    public static Message create(String message){
-        return create( message, Type.DEFAULT );
+    public static Message create(CharSequence text){
+        return create( text, Type.DEFAULT );
     }
 
     /**
      *
      *
-     * @param messageText
+     * @param text
      * @param type
      * @return
      */
-    public static Message create(String messageText, Type type){
+    public static Message create(CharSequence text, Type type){
 
-        Message messageEvent = new Message();
+        Message message = new Message();
 
-        messageEvent.message = messageText;
-        messageEvent.type = type;
+        message.text = text;
+        message.type = type;
 
-        return messageEvent;
+        return message;
     }
 
     /**
