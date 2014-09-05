@@ -9,7 +9,6 @@ import com.antyzero.njumeter.network.SpiceService;
 import com.octo.android.robospice.SpiceManager;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * BaseActivity created to provide some common behaviour for all activities in this application
@@ -24,7 +23,7 @@ class BaseActivity extends Activity {
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-        Messenger.INSTANCE.getEventBus().register( this );
+        Messenger.INSTANCE.register( this );
     }
 
     /**
@@ -33,7 +32,7 @@ class BaseActivity extends Activity {
     @Override
     protected void onDestroy() {
         Crouton.cancelAllCroutons();
-        Messenger.INSTANCE.getEventBus().unregister( this );
+        Messenger.INSTANCE.unregister( this );
         super.onDestroy();
     }
 
@@ -42,7 +41,7 @@ class BaseActivity extends Activity {
      *
      * @param dumbEvent blank event
      */
-    public void onEvent(Object dumbEvent) {
+    public void onEvent( Object dumbEvent ) {
         // do nothing
     }
 
@@ -52,8 +51,8 @@ class BaseActivity extends Activity {
      * @param message event
      */
     @SuppressWarnings( "UnusedDeclaration" )
-    public void onEvent(Message message) {
-        Crouton.makeText( this, message.getText(), Style.INFO ).show();
+    public void onEventMainThread( Message message ) {
+        Messenger.INSTANCE.process( this, message );
     }
 
     /**
@@ -69,7 +68,7 @@ class BaseActivity extends Activity {
      * Alternative way to obtain object reference, this one does not require casting in activities
      *
      * @param viewId view resource ID
-     * @param <T> generic type for method
+     * @param <T>    generic type for method
      * @return View class object
      */
     @SuppressWarnings( "unchecked" )
