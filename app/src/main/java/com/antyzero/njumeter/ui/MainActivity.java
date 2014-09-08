@@ -17,27 +17,27 @@ public class MainActivity extends BaseActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate( Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
 
         // Check if we have at least one account, if not redirect user to login screen
-        if (AccountManager.get(this).getAccountsByType(BuildConfig.ACCOUNT_TYPE).length == 0) {
-            AuthenticationActivity.start(this, REQUEST_CODE_ACCOUNT_CREATE);
+        if( AccountManager.get( this ).getAccountsByType( BuildConfig.ACCOUNT_TYPE ).length == 0 ) {
+            AuthenticationActivity.start( this, REQUEST_CODE_ACCOUNT_CREATE );
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView( R.layout.activity_main );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
 
-        if (requestCode == REQUEST_CODE_ACCOUNT_CREATE) {
+        if( requestCode == REQUEST_CODE_ACCOUNT_CREATE ) {
 
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Konto nie utworzone", Toast.LENGTH_SHORT).show();
+            if( resultCode == Activity.RESULT_CANCELED ) {
+                Toast.makeText( this, "Konto nie utworzone", Toast.LENGTH_SHORT ).show();
             }
         }
     }

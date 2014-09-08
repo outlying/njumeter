@@ -21,9 +21,15 @@ class BaseActivity extends Activity {
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    protected void onStart() {
+        super.onStart();
         Messenger.INSTANCE.register( this );
+    }
+
+    @Override
+    protected void onStop() {
+        Messenger.INSTANCE.unregister( this );
+        super.onStop();
     }
 
     /**
@@ -31,9 +37,8 @@ class BaseActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        Crouton.cancelAllCroutons();
-        Messenger.INSTANCE.unregister( this );
         super.onDestroy();
+        Crouton.cancelAllCroutons();
     }
 
     /**

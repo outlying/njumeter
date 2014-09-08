@@ -23,14 +23,16 @@
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:maxLength="9"
-            android:digits="0123456789"/>
+            android:digits="0123456789"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:enabled="false" />
+            android:enabled="false"
+            android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/button"

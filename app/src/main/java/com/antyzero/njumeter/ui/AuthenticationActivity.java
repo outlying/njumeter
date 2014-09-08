@@ -10,15 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.antyzero.njumeter.R;
-import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.request.LoginRequest;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Provides authentication form
@@ -42,8 +38,6 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
 
         editTextPassword = findView( R.id.editTextPassword );
         editTextPassword.addTextChangedListener( new PasswordTextWatcher() );
-
-        Messenger.INSTANCE.message( "QWEasd" );
     }
 
     /**
@@ -53,7 +47,9 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      */
     @Override
     public void onClick( View v ) {
-        button.setEnabled( false );
+        //button.setEnabled( false );
+
+        Messenger.INSTANCE.message( "QWEasd" );
 
         // TODO validation ?
 
@@ -68,7 +64,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     /**
      * Start activity to create new user account
      *
-     * @param activity
+     * @param activity require for start
      */
     public static void start( Activity activity, int requestCode ) {
 

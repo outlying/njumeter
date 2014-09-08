@@ -16,7 +16,9 @@ public enum Messenger {
     private final EventBus eventBus = EventBus.getDefault();
 
     /**
-     * @param text
+     * Simple way to provide test information to user
+     *
+     * @param text of message
      */
     public void message( String text ) {
         eventBus.post( Message.create( text ) );
@@ -46,15 +48,13 @@ public enum Messenger {
      * @param activity
      * @param message
      */
-    public void process( Activity activity, Message message ) {
-        Crouton.makeText( activity, message.getText(), Style.INFO ).show();
-    }
+    public void process( final Activity activity, final Message message ) {
 
-    /**
-     * @return
-     */
-    public EventBus getEventBus() {
-        return eventBus;
+        activity.runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                Crouton.makeText( activity, message.getText(), Style.INFO ).show();
+            }
+        } );
     }
-
 }
