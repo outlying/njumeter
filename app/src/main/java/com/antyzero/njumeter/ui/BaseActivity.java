@@ -24,10 +24,12 @@ class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         Messenger.INSTANCE.register( this );
+        spiceManager.start( this );
     }
 
     @Override
     protected void onStop() {
+        spiceManager.shouldStop();
         Messenger.INSTANCE.unregister( this );
         super.onStop();
     }

@@ -5,25 +5,25 @@ import com.antyzero.njumeter.network.Url;
 /**
  *
  */
-public class AuthenticationRequest extends BaseRequest<Void> {
+public class AuthenticationRequest extends BaseRequest<Boolean> {
 
     private final CharSequence user;
     private final CharSequence password;
 
     public AuthenticationRequest( CharSequence user, CharSequence password ) {
-        super(Void.class);
+        super(Boolean.class);
 
         this.user = user;
         this.password = password;
     }
 
     @Override
-    public Void loadDataFromNetwork() throws Exception {
+    public Boolean loadDataFromNetwork() throws Exception {
 
-        String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
+        //String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
 
 
 
-        return null;
+        return true;
     }
 }

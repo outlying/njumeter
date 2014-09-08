@@ -50,8 +50,6 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
 
         setFormEnable( false );
 
-        Messenger.INSTANCE.message( "QWEasd" );
-
         // TODO validation ?
 
         CharSequence user = editTextUser.getText();
@@ -114,17 +112,24 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     /**
      * Listen for login response
      */
-    private class AuthenticationRequestListener extends RequestListener<Void> {
+    private class AuthenticationRequestListener extends RequestListener<Boolean> {
 
         @Override
         public void onFailure( SpiceException spiceException ) {
-            Messenger.INSTANCE.message( "Błędny login i/lub hasło" );
+
+            // TODO support different error types
+
+            Messenger.INSTANCE.message( "Błędny login i/lub hasło, spróbuj ponownie" );
+
+            // Give user another chance
             setFormEnable( true );
         }
 
         @Override
-        public void onSuccess( Void aVoid ) {
-
+        public void onSuccess( Boolean result ) {
+            // TODO add user login data in Intent
+            setResult( RESULT_OK );
+            finish();
         }
     }
 }

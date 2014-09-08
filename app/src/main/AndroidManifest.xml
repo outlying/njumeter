@@ -28,6 +28,10 @@
         <meta-data android:name="com.crashlytics.ApiKey" android:value="73d09258d53c22be775335da98919e7ce89805ec"/>
 
         <service
+            android:name=".network.SpiceService"
+            android:exported="false" />
+
+        <service
             android:name=".authentication.NjuAuthenticatorService"
             android:exported="false">
 

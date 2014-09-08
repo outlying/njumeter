@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
+import com.antyzero.njumeter.messenger.Messenger;
 
 public class MainActivity extends BaseActivity {
 
@@ -36,8 +37,11 @@ public class MainActivity extends BaseActivity {
 
         if( requestCode == REQUEST_CODE_ACCOUNT_CREATE ) {
 
-            if( resultCode == Activity.RESULT_CANCELED ) {
-                Toast.makeText( this, "Konto nie utworzone", Toast.LENGTH_SHORT ).show();
+            // TODO resources
+            if( resultCode == Activity.RESULT_OK ) {
+                Messenger.INSTANCE.message( "Konto utworzone" );
+            } else {
+                Messenger.INSTANCE.message( "Konto nie utworzone" );
             }
         }
     }
