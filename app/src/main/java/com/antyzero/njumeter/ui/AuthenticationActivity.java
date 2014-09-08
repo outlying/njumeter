@@ -11,10 +11,10 @@ import android.widget.EditText;
 
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
-import com.antyzero.njumeter.network.request.LoginRequest;
+import com.antyzero.njumeter.network.request.AuthenticationRequest;
+import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
 import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 /**
  * Provides authentication form
@@ -47,7 +47,8 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      */
     @Override
     public void onClick( View v ) {
-        //button.setEnabled( false );
+
+        setFormEnable( false );
 
         Messenger.INSTANCE.message( "QWEasd" );
 
@@ -57,8 +58,19 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
         CharSequence password = editTextPassword.getText();
 
         getSpiceManager().execute(
-                new LoginRequest( user, password ),
-                new LoginRequestListener() );
+                new AuthenticationRequest( user, password ),
+                new AuthenticationRequestListener() );
+    }
+
+    /**
+     * Control enable state of form
+     *
+     * @param enable new state value
+     */
+    private void setFormEnable( boolean enable ) {
+        editTextUser.setEnabled( enable );
+        editTextPassword.setEnabled( enable );
+        button.setEnabled( enable );
     }
 
     /**
@@ -102,15 +114,16 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     /**
      * Listen for login response
      */
-    private class LoginRequestListener implements RequestListener<Void> {
+    private class AuthenticationRequestListener extends RequestListener<Void> {
 
         @Override
-        public void onRequestFailure( SpiceException spiceException ) {
-
+        public void onFailure( SpiceException spiceException ) {
+            Messenger.INSTANCE.message( "Błędny login i/lub hasło" );
+            setFormEnable( true );
         }
 
         @Override
-        public void onRequestSuccess( Void aVoid ) {
+        public void onSuccess( Void aVoid ) {
 
         }
     }

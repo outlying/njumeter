@@ -6,45 +6,41 @@ package com.antyzero.njumeter.messenger;
 public class Message {
 
     private CharSequence text;
-    private Type type;
+    private Style style;
 
     /**
      *
      */
-    private Message(){
+    private Message() {
     }
 
     public CharSequence getText() {
         return text;
     }
 
-    public Type getType() {
-        return type;
+    public Style getStyle() {
+        return style;
     }
 
     /**
-     *
-     *
      * @param text
      * @return
      */
-    public static Message create(CharSequence text){
-        return create( text, Type.DEFAULT );
+    public static Message create( CharSequence text ) {
+        return create( text, Style.DEFAULT );
     }
 
     /**
-     *
-     *
      * @param text
-     * @param type
+     * @param style
      * @return
      */
-    public static Message create(CharSequence text, Type type){
+    public static Message create( CharSequence text, Style style ) {
 
         Message message = new Message();
 
         message.text = text;
-        message.type = type;
+        message.style = style;
 
         return message;
     }
@@ -52,7 +48,7 @@ public class Message {
     /**
      *
      */
-    public enum Type {
+    public enum Style {
         DEFAULT
     }
 }
