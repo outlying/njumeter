@@ -18,6 +18,9 @@ import java.util.List;
  */
 public class SpiceService extends SpringAndroidSpiceService {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RestTemplate createRestTemplate() {
 
@@ -34,6 +37,9 @@ public class SpiceService extends SpringAndroidSpiceService {
         return restTemplate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CacheManager createCacheManager(Application application) throws CacheCreationException {
         return new CacheManager();
