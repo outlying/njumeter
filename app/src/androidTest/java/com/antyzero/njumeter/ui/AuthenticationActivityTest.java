@@ -2,7 +2,6 @@ package com.antyzero.njumeter.ui;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
-import android.text.TextUtils;
 
 import static org.assertj.android.api.Assertions.assertThat;
 

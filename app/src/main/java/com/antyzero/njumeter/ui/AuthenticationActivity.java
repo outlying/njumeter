@@ -10,15 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.antyzero.njumeter.R;
-import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.request.LoginRequest;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Provides authentication form
