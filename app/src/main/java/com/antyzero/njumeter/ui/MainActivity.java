@@ -22,7 +22,7 @@ public class MainActivity extends BaseActivity {
 
         // Check if we have at least one account, if not redirect user to login screen
         if( AccountManager.get( this ).getAccountsByType( BuildConfig.ACCOUNT_TYPE ).length == 0 ) {
-            AuthenticationActivity.startForResult( this, REQUEST_CODE_ACCOUNT_CREATE );
+            AuthenticationActivity.startForResult(this, REQUEST_CODE_ACCOUNT_CREATE);
         }
 
         setContentView( R.layout.activity_main );
@@ -39,8 +39,15 @@ public class MainActivity extends BaseActivity {
             // TODO resources
             if( resultCode == Activity.RESULT_OK ) {
                 Messenger.INSTANCE.message( "Konto utworzone" );
+
+                AuthenticationActivity.Result result = AuthenticationActivity.getIntentResult(data);
+
+                // TODO process result
+
+                Messenger.INSTANCE.message(result.toString());
+
             } else {
-                Messenger.INSTANCE.message( "Konto nie utworzone" );
+                Messenger.INSTANCE.message("Konto nie utworzone");
             }
         }
     }

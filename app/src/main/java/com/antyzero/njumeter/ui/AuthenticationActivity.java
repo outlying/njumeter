@@ -22,13 +22,16 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
  */
 public class AuthenticationActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final String EXTRA_USER = "extraUser";
+    private static final String EXTRA_PASSWORD = "extraPassword";
+
     Button button;
     EditText editTextUser;
     EditText editTextPassword;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_authentication );
 
         button = findView( R.id.button );
@@ -38,7 +41,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
         editTextUser.addTextChangedListener( new UserTextWatcher() );
 
         editTextPassword = findView( R.id.editTextPassword );
-        editTextPassword.addTextChangedListener( new PasswordTextWatcher() );
+        editTextPassword.addTextChangedListener(new PasswordTextWatcher());
     }
 
     /**
@@ -49,7 +52,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick( View v ) {
 
-        setFormEnable( false );
+        setFormEnable(false);
 
         // TODO validation ?
 
@@ -57,8 +60,8 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
         CharSequence password = editTextPassword.getText();
 
         getSpiceManager().execute(
-                new AuthenticationRequest( user, password ),
-                new AuthenticationRequestListener() );
+                new AuthenticationRequest(user, password),
+                new AuthenticationRequestListener());
     }
 
     /**
@@ -69,7 +72,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     private void setFormEnable( boolean enable ) {
         editTextUser.setEnabled( enable );
         editTextPassword.setEnabled( enable );
-        button.setEnabled( enable );
+        button.setEnabled(enable);
     }
 
     /**
@@ -82,6 +85,16 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
         Intent intent = new Intent( activity, AuthenticationActivity.class );
 
         activity.startActivityForResult( intent, requestCode );
+    }
+
+    /**
+     * Get simple result from resulting intent
+     *
+     * @param intent given Intent to get
+     * @return Container
+     */
+    public static Result getIntentResult(Intent intent){
+        return new Result(intent);
     }
 
     /**
@@ -128,9 +141,41 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
 
         @Override
         public void onSuccess( Boolean result ) {
-            // TODO add user login data in Intent
-            setResult( RESULT_OK );
+
+            Intent intent = new Intent();
+
+            intent.putExtra(EXTRA_USER, editTextUser.getText());
+            intent.putExtra(EXTRA_PASSWORD, editTextUser.getText());
+
+            setResult(RESULT_OK);
             finish();
+        }
+    }
+
+    /**
+     * Resulting authentication data, confirmed by server
+     */
+    public static class Result {
+
+        private final String user;
+        private final String password;
+
+        private Result(Intent intent) {
+            user = intent.getStringExtra(EXTRA_USER);
+            password = intent.getStringExtra(EXTRA_PASSWORD);
+        }
+
+        public String getUser() {
+            return user;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        @Override
+        public String toString() {
+            return "Result{user='" + user + '\'' + '}';
         }
     }
 }
