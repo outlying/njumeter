@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -50,8 +51,6 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
 
         setFormEnable( false );
 
-        Messenger.INSTANCE.message( "QWEasd" );
-
         // TODO validation ?
 
         CharSequence user = editTextUser.getText();
@@ -78,7 +77,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      *
      * @param activity require for start
      */
-    public static void start( Activity activity, int requestCode ) {
+    public static void startForResult( Activity activity, int requestCode ) {
 
         Intent intent = new Intent( activity, AuthenticationActivity.class );
 
@@ -114,17 +113,24 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     /**
      * Listen for login response
      */
-    private class AuthenticationRequestListener extends RequestListener<Void> {
+    private class AuthenticationRequestListener extends RequestListener<Boolean> {
 
         @Override
         public void onFailure( SpiceException spiceException ) {
-            Messenger.INSTANCE.message( "Błędny login i/lub hasło" );
+
+            // TODO support different error types
+
+            Messenger.INSTANCE.message( "Błędny login i/lub hasło, spróbuj ponownie" );
+
+            // Give user another chance
             setFormEnable( true );
         }
 
         @Override
-        public void onSuccess( Void aVoid ) {
-
+        public void onSuccess( Boolean result ) {
+            // TODO add user login data in Intent
+            setResult( RESULT_OK );
+            finish();
         }
     }
 }

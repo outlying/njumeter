@@ -1,7 +1,6 @@
 package com.antyzero.njumeter.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
@@ -24,10 +23,12 @@ class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         Messenger.INSTANCE.register( this );
+        spiceManager.start( this );
     }
 
     @Override
     protected void onStop() {
+        spiceManager.shouldStop();
         Messenger.INSTANCE.unregister( this );
         super.onStop();
     }
