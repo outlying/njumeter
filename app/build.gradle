@@ -36,14 +36,14 @@ android {
         exclude 'META-INF/notice.txt'
     }
 
-    compileSdkVersion 19
+    compileSdkVersion 20
     buildToolsVersion "20.0.0"
 
     defaultConfig {
 
         applicationId "com.antyzero.njumeter"
         minSdkVersion 16
-        targetSdkVersion 19
+        targetSdkVersion 20
 
         versionCode 800
         versionName "2.0.0"
