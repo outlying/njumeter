@@ -4,7 +4,6 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
@@ -23,7 +22,7 @@ public class MainActivity extends BaseActivity {
 
         // Check if we have at least one account, if not redirect user to login screen
         if( AccountManager.get( this ).getAccountsByType( BuildConfig.ACCOUNT_TYPE ).length == 0 ) {
-            AuthenticationActivity.start( this, REQUEST_CODE_ACCOUNT_CREATE );
+            AuthenticationActivity.startForResult( this, REQUEST_CODE_ACCOUNT_CREATE );
         }
 
         setContentView( R.layout.activity_main );

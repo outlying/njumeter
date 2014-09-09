@@ -1,7 +1,6 @@
 package com.antyzero.njumeter.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;

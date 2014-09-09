@@ -1,7 +1,5 @@
 package com.antyzero.njumeter.network.request;
 
-import com.antyzero.njumeter.network.Url;
-
 /**
  *
  */

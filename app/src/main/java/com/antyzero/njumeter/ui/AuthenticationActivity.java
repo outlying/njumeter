@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -76,7 +77,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      *
      * @param activity require for start
      */
-    public static void start( Activity activity, int requestCode ) {
+    public static void startForResult( Activity activity, int requestCode ) {
 
         Intent intent = new Intent( activity, AuthenticationActivity.class );
 

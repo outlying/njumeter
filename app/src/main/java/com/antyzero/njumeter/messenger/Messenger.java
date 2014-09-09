@@ -49,12 +49,6 @@ public enum Messenger {
      * @param message
      */
     public void process( final Activity activity, final Message message ) {
-
-        activity.runOnUiThread( new Runnable() {
-            @Override
-            public void run() {
-                Crouton.makeText( activity, message.getText(), Style.INFO ).show();
-            }
-        } );
+        Crouton.makeText( activity, message.getText(), Style.INFO ).show();
     }
 }
