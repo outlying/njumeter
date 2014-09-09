@@ -54,7 +54,18 @@ android {
         buildConfigField "String", "ACCOUNT_TYPE", "\"com.antyzero.njumeter.account\""
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+        }
+    }
+
     buildTypes {
+
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
