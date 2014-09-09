@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -30,17 +29,17 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     EditText editTextPassword;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView( R.layout.activity_authentication );
+        setContentView(R.layout.activity_authentication);
 
-        button = findView( R.id.button );
-        button.setOnClickListener( this );
+        button = findView(R.id.button);
+        button.setOnClickListener(this);
 
-        editTextUser = findView( R.id.editTextUser );
-        editTextUser.addTextChangedListener( new UserTextWatcher() );
+        editTextUser = findView(R.id.editTextUser);
+        editTextUser.addTextChangedListener(new UserTextWatcher());
 
-        editTextPassword = findView( R.id.editTextPassword );
+        editTextPassword = findView(R.id.editTextPassword);
         editTextPassword.addTextChangedListener(new PasswordTextWatcher());
     }
 
@@ -50,7 +49,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      * {@inheritDoc}
      */
     @Override
-    public void onClick( View v ) {
+    public void onClick(View v) {
 
         setFormEnable(false);
 
@@ -69,9 +68,9 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      *
      * @param enable new state value
      */
-    private void setFormEnable( boolean enable ) {
-        editTextUser.setEnabled( enable );
-        editTextPassword.setEnabled( enable );
+    private void setFormEnable(boolean enable) {
+        editTextUser.setEnabled(enable);
+        editTextPassword.setEnabled(enable);
         button.setEnabled(enable);
     }
 
@@ -80,11 +79,11 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      *
      * @param activity require for start
      */
-    public static void startForResult( Activity activity, int requestCode ) {
+    public static void startForResult(Activity activity, int requestCode) {
 
-        Intent intent = new Intent( activity, AuthenticationActivity.class );
+        Intent intent = new Intent(activity, AuthenticationActivity.class);
 
-        activity.startActivityForResult( intent, requestCode );
+        activity.startActivityForResult(intent, requestCode);
     }
 
     /**
@@ -93,7 +92,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      * @param intent given Intent to get
      * @return Container
      */
-    public static Result getIntentResult(Intent intent){
+    public static Result getIntentResult(Intent intent) {
         return new Result(intent);
     }
 
@@ -103,11 +102,11 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     private class UserTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged( Editable editable ) {
+        public void afterTextChanged(Editable editable) {
 
             final boolean validLength = editable.length() >= 9;
 
-            editTextPassword.setEnabled( validLength );
+            editTextPassword.setEnabled(validLength);
         }
     }
 
@@ -117,9 +116,9 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     private class PasswordTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged( Editable editable ) {
+        public void afterTextChanged(Editable editable) {
 
-            button.setEnabled( !TextUtils.isEmpty( editable ) );
+            button.setEnabled(!TextUtils.isEmpty(editable));
         }
     }
 
@@ -129,23 +128,23 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
     private class AuthenticationRequestListener extends RequestListener<Boolean> {
 
         @Override
-        public void onFailure( SpiceException spiceException ) {
+        public void onFailure(SpiceException spiceException) {
 
             // TODO support different error types
 
-            Messenger.INSTANCE.message( "Błędny login i/lub hasło, spróbuj ponownie" );
+            Messenger.INSTANCE.message("Błędny login i/lub hasło, spróbuj ponownie");
 
             // Give user another chance
-            setFormEnable( true );
+            setFormEnable(true);
         }
 
         @Override
-        public void onSuccess( Boolean result ) {
+        public void onSuccess(Boolean result) {
 
             Intent intent = new Intent();
 
-            intent.putExtra(EXTRA_USER, editTextUser.getText());
-            intent.putExtra(EXTRA_PASSWORD, editTextUser.getText());
+            intent.putExtra(EXTRA_USER, String.valueOf(editTextUser.getText().toString()));
+            intent.putExtra(EXTRA_PASSWORD, String.valueOf(editTextUser.getText()));
 
             setResult(RESULT_OK, intent);
             finish();
