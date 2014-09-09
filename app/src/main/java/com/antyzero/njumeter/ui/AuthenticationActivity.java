@@ -147,7 +147,7 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
             intent.putExtra(EXTRA_USER, editTextUser.getText());
             intent.putExtra(EXTRA_PASSWORD, editTextUser.getText());
 
-            setResult(RESULT_OK);
+            setResult(RESULT_OK, intent);
             finish();
         }
     }
