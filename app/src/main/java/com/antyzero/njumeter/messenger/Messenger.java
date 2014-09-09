@@ -1,6 +1,7 @@
 package com.antyzero.njumeter.messenger;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import de.greenrobot.event.EventBus;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -50,5 +51,7 @@ public enum Messenger {
      */
     public void process( final Activity activity, final Message message ) {
         Crouton.makeText( activity, message.getText(), Style.INFO ).show();
+        // Redundant to see if Crouton is working
+        Toast.makeText(activity, message.getText(), Toast.LENGTH_SHORT).show();
     }
 }
