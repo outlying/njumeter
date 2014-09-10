@@ -21,14 +21,14 @@ public enum Messenger {
      *
      * @param text of message
      */
-    public void message( String text ) {
+    public void message( final String text ) {
         eventBus.post( Message.create( text ) );
     }
 
     /**
-     * Way to register message reciving support
+     * Way to register message receiving support
      *
-     * @param subscriber
+     * @param subscriber Activity for displaying messages
      */
     public void register( Activity subscriber ) {
         eventBus.register( subscriber );
@@ -37,14 +37,14 @@ public enum Messenger {
     /**
      * Unregister UI
      *
-     * @param subscriber
+     * @param subscriber Activity for displaying messages
      */
     public void unregister( Activity subscriber ) {
         eventBus.unregister( subscriber );
     }
 
     /**
-     * ...
+     * Process incoming message
      *
      * @param activity
      * @param message

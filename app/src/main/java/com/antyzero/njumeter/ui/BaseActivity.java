@@ -1,6 +1,7 @@
 package com.antyzero.njumeter.ui;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
@@ -16,20 +17,24 @@ class BaseActivity extends Activity {
 
     private SpiceManager spiceManager = new SpiceManager( SpiceService.class );
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Messenger.INSTANCE.register( this );
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void onStart() {
         super.onStart();
-        Messenger.INSTANCE.register( this );
         spiceManager.start( this );
     }
 
     @Override
     protected void onStop() {
         spiceManager.shouldStop();
-        Messenger.INSTANCE.unregister( this );
         super.onStop();
     }
 
@@ -38,8 +43,9 @@ class BaseActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        Messenger.INSTANCE.unregister( this );
         Crouton.cancelAllCroutons();
+        super.onDestroy();
     }
 
     /**

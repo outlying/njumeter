@@ -4,6 +4,8 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.antyzero.njumeter.BuildConfig;
@@ -16,12 +18,14 @@ public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
 
+    private Button button;
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
 
         // First Activity creation
         if( savedInstanceState == null ) {
@@ -33,6 +37,14 @@ public class MainActivity extends BaseActivity {
         }
 
         setContentView( R.layout.activity_main );
+
+        button = findView(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Messenger.INSTANCE.message("test" + System.currentTimeMillis());
+            }
+        });
     }
 
     /**
@@ -45,11 +57,10 @@ public class MainActivity extends BaseActivity {
 
             // TODO resources
             if( resultCode == Activity.RESULT_OK ) {
-                Messenger.INSTANCE.message( "Konto utworzone" );
 
                 AuthenticationActivity.Result result = AuthenticationActivity.getIntentResult(data);
 
-                // TODO process data
+                Messenger.INSTANCE.message( "Konto utworzone" );
 
             } else {
                 Messenger.INSTANCE.message("Konto nie utworzone");
