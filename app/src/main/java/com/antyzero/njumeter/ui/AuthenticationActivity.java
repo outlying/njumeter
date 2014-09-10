@@ -217,7 +217,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
             final String userName = String.valueOf(editTextUser.getText());
             final String password = String.valueOf(editTextPassword.getText());
-            
+
             registerNewAccount(userName, password);
         }
     }
