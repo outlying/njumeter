@@ -32,6 +32,9 @@ class BaseActivity extends Activity {
         spiceManager.start( this );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onStop() {
         spiceManager.shouldStop();
