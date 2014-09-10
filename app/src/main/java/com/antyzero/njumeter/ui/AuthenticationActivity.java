@@ -101,31 +101,23 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         button.setEnabled(enable);
     }
 
-    private void registerNewAccount(){
-
-        final Intent intent = new Intent();
+    private void registerNewAccount(String user, String password){
 
         String accountName = "test";
 
-        intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, accountName);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, BuildConfig.ACCOUNT_TYPE);
-        intent.putExtra(AccountManager.KEY_AUTHTOKEN, authtoken);
-
         final Account account = new Account(accountName, BuildConfig.ACCOUNT_TYPE);
 
-        AccountManager mAccountManager = AccountManager.get(this);
+        AccountManager accountManager = AccountManager.get(this);
 
         if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
 
-            String authtoken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
-            String authtokenType = mAuthTokenType;
             // Creating the account on the device and setting the auth token we got
             // (Not setting the auth token will cause another call to the server to authenticate the user)
 
-            mAccountManager.addAccountExplicitly(account, accountPassword, null);
-            mAccountManager.setAuthToken(account, authtokenType, authtoken);
+            accountManager.addAccountExplicitly(account, password, null);
+            accountManager.setAuthToken(account, authtokenType, authtoken);
         } else {
-            mAccountManager.setPassword(account, accountPassword);
+            accountManager.setPassword(account, password);
         }
 
         setAccountAuthenticatorResult(intent.getExtras());
