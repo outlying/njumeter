@@ -14,6 +14,9 @@ import com.antyzero.njumeter.messenger.Messenger;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
@@ -60,10 +63,14 @@ public class MainActivity extends BaseActivity {
 
                 AuthenticationActivity.Result result = AuthenticationActivity.getIntentResult(data);
 
-                Messenger.INSTANCE.message( "Konto utworzone" );
+
+
+                //Messenger.INSTANCE.message( "Konto utworzone" );
+
+                Crouton.makeText(this, "QQQ", Style.INFO).show();
 
             } else {
-                Messenger.INSTANCE.message("Konto nie utworzone");
+                //Messenger.INSTANCE.message("Konto nie utworzone");
             }
         }
     }

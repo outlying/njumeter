@@ -44,7 +44,7 @@ class BaseActivity extends Activity {
     @Override
     protected void onDestroy() {
         Messenger.INSTANCE.unregister( this );
-        Crouton.cancelAllCroutons();
+        //Crouton.cancelAllCroutons();
         super.onDestroy();
     }
 

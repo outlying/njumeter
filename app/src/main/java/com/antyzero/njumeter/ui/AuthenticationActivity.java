@@ -1,6 +1,7 @@
 package com.antyzero.njumeter.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -81,9 +82,19 @@ public class AuthenticationActivity extends BaseActivity implements View.OnClick
      */
     public static void startForResult(Activity activity, int requestCode) {
 
-        Intent intent = new Intent(activity, AuthenticationActivity.class);
+        Intent intent = getIntent(activity);
 
         activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * Get valid starting Intent
+     *
+     * @param context required for Intent
+     * @return Intent object
+     */
+    public static Intent getIntent(Context context) {
+        return new Intent(context, AuthenticationActivity.class);
     }
 
     /**
