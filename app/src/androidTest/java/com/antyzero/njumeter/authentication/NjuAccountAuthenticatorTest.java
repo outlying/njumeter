@@ -45,16 +45,6 @@ public class NjuAccountAuthenticatorTest extends ApplicationTestCase<NjuApplicat
 
         Bundle bundle = authenticator.addAccount( null, null, null, null, null );
 
-        validateAuthBundle( bundle );
-    }
-
-    public void testGetAuthTokenIsValid() throws NetworkErrorException {
-        Bundle bundle = authenticator.getAuthToken( null, null, null, null );
-
-        validateAuthBundle( bundle );
-    }
-
-    private void validateAuthBundle( Bundle bundle ) {
         assertThat( bundle.containsKey( AccountManager.KEY_INTENT ) ||
                 bundle.containsKey( AccountManager.KEY_ACCOUNT_NAME ) ||
                 bundle.containsKey( AccountManager.KEY_ERROR_CODE ) ).isTrue();
