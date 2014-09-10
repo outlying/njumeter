@@ -4,10 +4,13 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends BaseActivity {
 
@@ -20,9 +23,13 @@ public class MainActivity extends BaseActivity {
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
-        // Check if we have at least one account, if not redirect user to login screen
-        if( AccountManager.get( this ).getAccountsByType( BuildConfig.ACCOUNT_TYPE ).length == 0 ) {
-            AuthenticationActivity.startForResult(this, REQUEST_CODE_ACCOUNT_CREATE);
+        // First Activity creation
+        if( savedInstanceState == null ) {
+
+            // Check if we have at least one account, if not redirect user to login screen
+            if (AccountManager.get(this).getAccountsByType(BuildConfig.ACCOUNT_TYPE).length == 0) {
+                AuthenticationActivity.startForResult(this, REQUEST_CODE_ACCOUNT_CREATE);
+            }
         }
 
         setContentView( R.layout.activity_main );
@@ -42,9 +49,7 @@ public class MainActivity extends BaseActivity {
 
                 AuthenticationActivity.Result result = AuthenticationActivity.getIntentResult(data);
 
-                // TODO process result
-
-                Messenger.INSTANCE.message(result.toString());
+                // TODO process data
 
             } else {
                 Messenger.INSTANCE.message("Konto nie utworzone");

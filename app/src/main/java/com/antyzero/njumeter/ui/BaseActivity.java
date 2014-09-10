@@ -47,6 +47,7 @@ class BaseActivity extends Activity {
      *
      * @param dumbEvent blank event
      */
+    @SuppressWarnings("UnusedDeclaration")
     public void onEvent( Object dumbEvent ) {
         // do nothing
     }
