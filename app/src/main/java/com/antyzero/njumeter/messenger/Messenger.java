@@ -46,12 +46,12 @@ public enum Messenger {
     /**
      * Process incoming message
      *
-     * @param activity
-     * @param message
+     * @param activity that will display this message
+     * @param message to display
      */
     public void process( final Activity activity, final Message message ) {
         Crouton.makeText( activity, message.getText(), Style.INFO ).show();
         // Redundant to see if Crouton is working
-        Toast.makeText(activity, message.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Crouton above ? " + message.getText(), Toast.LENGTH_SHORT).show();
     }
 }
