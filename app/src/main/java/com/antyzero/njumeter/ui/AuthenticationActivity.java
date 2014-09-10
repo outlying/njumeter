@@ -32,6 +32,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
     private static final String EXTRA_USER = "extraUser";
     private static final String EXTRA_PASSWORD = "extraPassword";
+    public static final String AUTH_TOKEN_DEFAULT = "000000000000000";
+    public static final String AUTH_TOKEN_TYPE = "Default";
 
     private SpiceManager spiceManager = new SpiceManager( SpiceService.class );
 
@@ -60,7 +62,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onStart() {
         super.onStart();
-        spiceManager.start( this );
+        spiceManager.start(this);
     }
 
     /**
@@ -103,24 +105,30 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         button.setEnabled(enable);
     }
 
+    /**
+     * This method will add new account to system
+     *
+     * @param userName
+     * @param password
+     */
     private void registerNewAccount(String userName, String password){
-
-        final String authToken = "000000000000000";
 
         final Intent intent = new Intent();
         intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, userName);
         intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
-        intent.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
+        intent.putExtra(AccountManager.KEY_AUTHTOKEN, AUTH_TOKEN_DEFAULT);
 
         final Account account = new Account(userName, ACCOUNT_TYPE);
 
         AccountManager accountManager = AccountManager.get(this);
 
-        if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
+        // getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)
+
+        if (true) {
 
             accountManager.addAccountExplicitly(account, password, null);
             // We don't support auth tokens
-            accountManager.setAuthToken(account, "Default", authToken);
+            accountManager.setAuthToken(account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT);
         } else {
             accountManager.setPassword(account, password);
         }
@@ -207,13 +215,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         @Override
         public void onSuccess(Boolean result) {
 
-            Intent intent = new Intent();
-
-            intent.putExtra(EXTRA_USER, String.valueOf(editTextUser.getText().toString()));
-            intent.putExtra(EXTRA_PASSWORD, String.valueOf(editTextUser.getText()));
-
-            setResult(RESULT_OK, intent);
-            finish();
+            final String userName = String.valueOf(editTextUser.getText());
+            final String password = String.valueOf(editTextPassword.getText());
+            
+            registerNewAccount(userName, password);
         }
     }
 
