@@ -23,6 +23,8 @@ import com.antyzero.njumeter.tools.SimpleTextWatcher;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
+import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
+
 /**
  * Provides authentication form
  */
@@ -101,21 +103,24 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         button.setEnabled(enable);
     }
 
-    private void registerNewAccount(String user, String password){
+    private void registerNewAccount(String userName, String password){
 
-        String accountName = "test";
+        final String authToken = "000000000000000";
 
-        final Account account = new Account(accountName, BuildConfig.ACCOUNT_TYPE);
+        final Intent intent = new Intent();
+        intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, userName);
+        intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
+        intent.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
+
+        final Account account = new Account(userName, ACCOUNT_TYPE);
 
         AccountManager accountManager = AccountManager.get(this);
 
         if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
 
-            // Creating the account on the device and setting the auth token we got
-            // (Not setting the auth token will cause another call to the server to authenticate the user)
-
             accountManager.addAccountExplicitly(account, password, null);
-            accountManager.setAuthToken(account, authtokenType, authtoken);
+            // We don't support auth tokens
+            accountManager.setAuthToken(account, "Default", authToken);
         } else {
             accountManager.setPassword(account, password);
         }
