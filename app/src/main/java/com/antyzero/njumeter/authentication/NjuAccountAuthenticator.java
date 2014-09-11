@@ -33,7 +33,7 @@ public class NjuAccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle addAccount( AccountAuthenticatorResponse response, String accountType, String authTokenType,
                               String[] requiredFeatures, Bundle options ) throws NetworkErrorException {
 
-        final Intent intent = AuthenticationActivity.intent(context);
+        final Intent intent = AuthenticationActivity.intent(context, AuthenticationActivity.Action.ADD_NEW_ACCOUNT);
 
         intent.putExtra( AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response );
 
