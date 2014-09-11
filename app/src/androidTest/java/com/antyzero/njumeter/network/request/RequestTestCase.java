@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
  */
 abstract class RequestTestCase extends ApplicationTestCase<NjuApplication> {
 
-    protected RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     public RequestTestCase() {
         super(NjuApplication.class);
@@ -23,5 +23,9 @@ abstract class RequestTestCase extends ApplicationTestCase<NjuApplication> {
         super.setUp();
 
         restTemplate = new SpiceService().createRestTemplate();
+    }
+
+    public RestTemplate getRestTemplate() {
+        return restTemplate;
     }
 }

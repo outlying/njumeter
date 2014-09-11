@@ -16,6 +16,7 @@ public class NjuSyncAdapter extends AbstractThreadedSyncAdapter {
         super(context, autoInitialize);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public NjuSyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
     }
