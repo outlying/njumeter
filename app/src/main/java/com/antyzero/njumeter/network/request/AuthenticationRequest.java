@@ -1,5 +1,7 @@
 package com.antyzero.njumeter.network.request;
 
+import com.antyzero.njumeter.network.Url;
+
 /**
  *
  */
@@ -18,7 +20,7 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
     @Override
     public Boolean loadDataFromNetwork() throws Exception {
 
-        //String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
+        String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
 
 
 
