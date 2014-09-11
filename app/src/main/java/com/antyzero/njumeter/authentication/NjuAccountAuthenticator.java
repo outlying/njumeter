@@ -24,11 +24,17 @@ public class NjuAccountAuthenticator extends AbstractAccountAuthenticator {
         this.context = context;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bundle editProperties( AccountAuthenticatorResponse response, String accountType ) {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bundle addAccount( AccountAuthenticatorResponse response, String accountType, String authTokenType,
                               String[] requiredFeatures, Bundle options ) throws NetworkErrorException {
@@ -44,12 +50,18 @@ public class NjuAccountAuthenticator extends AbstractAccountAuthenticator {
         return bundle;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bundle confirmCredentials( AccountAuthenticatorResponse response, Account account,
                                       Bundle options ) throws NetworkErrorException {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bundle getAuthToken( AccountAuthenticatorResponse response, Account account, String authTokenType,
                                 Bundle options ) throws NetworkErrorException {
@@ -95,17 +107,26 @@ public class NjuAccountAuthenticator extends AbstractAccountAuthenticator {
         return bundle;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getAuthTokenLabel( String authTokenType ) {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bundle updateCredentials( AccountAuthenticatorResponse response, Account account, String authTokenType,
                                      Bundle options ) throws NetworkErrorException {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Bundle hasFeatures( AccountAuthenticatorResponse response, Account account,
                                String[] features ) throws NetworkErrorException {
