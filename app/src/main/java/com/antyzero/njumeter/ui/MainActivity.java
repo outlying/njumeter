@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -35,7 +32,7 @@ public class MainActivity extends BaseActivity {
 
             // Check if we have at least one account, if not redirect user to login screen
             if (AccountManager.get(this).getAccountsByType(BuildConfig.ACCOUNT_TYPE).length == 0) {
-                AuthenticationActivity.startForResult(this, REQUEST_CODE_ACCOUNT_CREATE);
+                AuthenticationActivity.startForNewAccountResult(this, REQUEST_CODE_ACCOUNT_CREATE);
             }
         }
 
@@ -60,10 +57,6 @@ public class MainActivity extends BaseActivity {
 
             // TODO resources
             if( resultCode == Activity.RESULT_OK ) {
-
-                AuthenticationActivity.Result result = AuthenticationActivity.getIntentResult(data);
-
-
 
                 //Messenger.INSTANCE.message( "Konto utworzone" );
 

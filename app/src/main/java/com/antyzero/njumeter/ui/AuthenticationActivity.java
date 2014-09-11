@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.SpiceService;
@@ -23,6 +22,8 @@ import com.antyzero.njumeter.tools.SimpleTextWatcher;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
+import java.io.Serializable;
+
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
 
 /**
@@ -30,12 +31,14 @@ import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
  */
 public class AuthenticationActivity extends AccountAuthenticatorActivity implements View.OnClickListener {
 
-    private static final String EXTRA_USER = "extraUser";
-    private static final String EXTRA_PASSWORD = "extraPassword";
+    private static final String EXTRA_ACTION = "EXTRA_ACTION";
+
     public static final String AUTH_TOKEN_DEFAULT = "000000000000000";
     public static final String AUTH_TOKEN_TYPE = "Default";
 
-    private SpiceManager spiceManager = new SpiceManager( SpiceService.class );
+    private SpiceManager spiceManager = new SpiceManager(SpiceService.class);
+
+    private Action action;
 
     Button button;
     EditText editTextUser;
@@ -44,6 +47,13 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!getIntent().hasExtra(EXTRA_ACTION)) {
+            throw new IllegalStateException("Extra '" + EXTRA_ACTION + "' is required to start this Activity");
+        }
+
+        action = (Action) getIntent().getSerializableExtra(EXTRA_ACTION);
+
         setContentView(R.layout.activity_authentication);
 
         button = (Button) findViewById(R.id.button);
@@ -111,9 +121,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param userName
      * @param password
      */
-    private void registerNewAccount(String userName, String password){
+    private void registerNewAccount(String userName, String password) {
 
         final Intent intent = new Intent();
+
         intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, userName);
         intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
         intent.putExtra(AccountManager.KEY_AUTHTOKEN, AUTH_TOKEN_DEFAULT);
@@ -122,15 +133,19 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         AccountManager accountManager = AccountManager.get(this);
 
-        // getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)
+        switch (action){
 
-        if (true) {
+            case ADD_NEW_ACCOUNT:
+                accountManager.addAccountExplicitly(account, password, null);
+                accountManager.setAuthToken(account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT);
+                break;
 
-            accountManager.addAccountExplicitly(account, password, null);
-            // We don't support auth tokens
-            accountManager.setAuthToken(account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT);
-        } else {
-            accountManager.setPassword(account, password);
+            case CHANGE_PASSWORD:
+                accountManager.setPassword(account, password);
+                break;
+
+            default:
+                throw new IllegalStateException("Unsupported enum Value");
         }
 
         setAccountAuthenticatorResult(intent.getExtras());
@@ -143,9 +158,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      *
      * @param activity require for start
      */
-    public static void startForResult(Activity activity, int requestCode) {
+    public static void startForNewAccountResult(Activity activity, int requestCode) {
 
-        Intent intent = getIntent(activity);
+        Intent intent = intent(activity, Action.ADD_NEW_ACCOUNT);
 
         activity.startActivityForResult(intent, requestCode);
     }
@@ -156,18 +171,13 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param context required for Intent
      * @return Intent object
      */
-    public static Intent getIntent(Context context) {
-        return new Intent(context, AuthenticationActivity.class);
-    }
+    public static Intent intent(Context context, Action action) {
 
-    /**
-     * Get simple result from resulting intent
-     *
-     * @param intent given Intent to get
-     * @return Container
-     */
-    public static Result getIntentResult(Intent intent) {
-        return new Result(intent);
+        final Intent intent = new Intent(context, AuthenticationActivity.class);
+
+        intent.putExtra(EXTRA_ACTION, action);
+
+        return intent;
     }
 
     /**
@@ -223,29 +233,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     }
 
     /**
-     * Resulting authentication data, confirmed by server
+     * Actions for this Activity
      */
-    public static class Result {
-
-        private final String user;
-        private final String password;
-
-        private Result(Intent intent) {
-            user = intent.getStringExtra(EXTRA_USER);
-            password = intent.getStringExtra(EXTRA_PASSWORD);
-        }
-
-        public String getUser() {
-            return user;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        @Override
-        public String toString() {
-            return "Result{user='" + user + '\'' + '}';
-        }
+    public enum Action {
+        ADD_NEW_ACCOUNT,
+        CHANGE_PASSWORD
     }
 }
