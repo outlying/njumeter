@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
+import com.antyzero.njumeter.network.NetworkModule;
 import com.antyzero.njumeter.network.SpiceService;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
@@ -25,6 +26,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import java.io.Serializable;
 
 import javax.inject.Inject;
+
+import dagger.ObjectGraph;
 
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
 
@@ -54,6 +57,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         if (!getIntent().hasExtra(EXTRA_ACTION)) {
             throw new IllegalStateException("Extra '" + EXTRA_ACTION + "' is required to start this Activity");
         }
+
+        ObjectGraph.create(NetworkModule.class).inject(this);
 
         action = (Action) getIntent().getSerializableExtra(EXTRA_ACTION);
 

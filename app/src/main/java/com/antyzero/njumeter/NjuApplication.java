@@ -24,13 +24,5 @@ public class NjuApplication extends Application {
         if(!BuildConfig.DEBUG) {
             Crashlytics.start(this);
         }
-
-        /*objectGraph = ObjectGraph.create(getModules().toArray());
-        objectGraph.inject(this);*/
-    }
-
-    private List<Object> getModules() {
-        return Arrays.<Object>asList(
-                new NetworkModule());
     }
 }

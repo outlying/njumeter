@@ -5,11 +5,13 @@ import android.os.Bundle;
 
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
+import com.antyzero.njumeter.network.NetworkModule;
 import com.antyzero.njumeter.network.SpiceService;
 import com.octo.android.robospice.SpiceManager;
 
 import javax.inject.Inject;
 
+import dagger.ObjectGraph;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
@@ -23,6 +25,7 @@ abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ObjectGraph.create(NetworkModule.class).inject(this);
         Messenger.INSTANCE.register( this );
     }
 
