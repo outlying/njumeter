@@ -5,10 +5,7 @@ import android.app.Application;
 import com.antyzero.njumeter.messenger.MessengerModule;
 import com.antyzero.njumeter.network.NetworkModule;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Application module
@@ -30,8 +27,6 @@ public class NjuModule {
         this.application = application;
     }
 
-    @Provides
-    @Singleton
     Application provideApplication() {
         return application;
     }

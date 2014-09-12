@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Messenger.INSTANCE.message("test" + System.currentTimeMillis());
+                messenger.message("test" + System.currentTimeMillis());
             }
         });
     }

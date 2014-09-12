@@ -45,6 +45,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Inject
     SpiceManager spiceManager;
 
+    @Inject
+    Messenger messenger;
+
     private Action action;
 
     Button button;
@@ -59,7 +62,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
             throw new IllegalStateException("Extra '" + EXTRA_ACTION + "' is required to start this Activity");
         }
 
-        ObjectGraph.create(BaseActivity.MODULES).inject(this);
+        NjuApplication.get(this).inject(this);
 
         action = (Action) getIntent().getSerializableExtra(EXTRA_ACTION);
 
@@ -225,7 +228,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
             // TODO support different error types
 
-            Messenger.INSTANCE.message("Błędny login i/lub hasło, spróbuj ponownie");
+            messenger.message("Błędny login i/lub hasło, spróbuj ponownie");
 
             // Give user another chance
             setFormEnable(true);
