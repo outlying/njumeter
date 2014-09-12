@@ -23,7 +23,6 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
         String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
 
 
-
         return true;
     }
 }
