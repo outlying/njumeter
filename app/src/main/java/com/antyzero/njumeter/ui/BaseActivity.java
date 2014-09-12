@@ -20,33 +20,10 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
  */
 abstract class BaseActivity extends Activity {
 
-    @Inject
-    SpiceManager spiceManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Messenger.INSTANCE.register( this );
-
-        ObjectGraph.create(NetworkModule.class).inject(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        spiceManager.start( this );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onStop() {
-        spiceManager.shouldStop();
-        super.onStop();
     }
 
     /**
@@ -77,15 +54,6 @@ abstract class BaseActivity extends Activity {
     @SuppressWarnings( "UnusedDeclaration" )
     public void onEventMainThread( Message message ) {
         Messenger.INSTANCE.process( this, message );
-    }
-
-    /**
-     * Access to SpiceManager
-     *
-     * @return SpiceManager object
-     */
-    protected SpiceManager getSpiceManager() {
-        return spiceManager;
     }
 
     /**
