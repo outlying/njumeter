@@ -3,6 +3,7 @@ package com.antyzero.njumeter.ui;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.NetworkModule;
@@ -25,8 +26,9 @@ abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ObjectGraph.create(NetworkModule.class).inject(this);
         Messenger.INSTANCE.register( this );
+
+        ObjectGraph.create(NetworkModule.class).inject(this);
     }
 
     /**

@@ -8,7 +8,7 @@ import dagger.Provides;
 /**
  * Provides network components
  */
-@Module(injects = {SpiceManager.class})
+@Module(injects = {SpiceManager.class}, library = true)
 public class NetworkModule {
 
     @Provides

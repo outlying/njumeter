@@ -15,13 +15,12 @@ import dagger.ObjectGraph;
  */
 public class NjuApplication extends Application {
 
-
     @Override
     public void onCreate() {
         super.onCreate();
 
         // For non debug builds use Crashlytics reports
-        if(!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             Crashlytics.start(this);
         }
     }

@@ -5,12 +5,16 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.ui.AuthenticationActivity;
+
+import javax.inject.Inject;
 
 /**
  *

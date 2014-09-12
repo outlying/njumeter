@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.NetworkModule;
