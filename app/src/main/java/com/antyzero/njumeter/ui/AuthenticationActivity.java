@@ -24,6 +24,8 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
 
 /**
@@ -36,7 +38,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     public static final String AUTH_TOKEN_DEFAULT = "000000000000000";
     public static final String AUTH_TOKEN_TYPE = "Default";
 
-    private SpiceManager spiceManager = new SpiceManager(SpiceService.class);
+    @Inject
+    SpiceManager spiceManager;
 
     private Action action;
 

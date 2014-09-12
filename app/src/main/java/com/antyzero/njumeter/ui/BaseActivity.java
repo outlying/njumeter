@@ -8,14 +8,17 @@ import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.SpiceService;
 import com.octo.android.robospice.SpiceManager;
 
+import javax.inject.Inject;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
  * BaseActivity created to provide some common behaviour for all activities in this application
  */
-class BaseActivity extends Activity {
+abstract class BaseActivity extends Activity {
 
-    private SpiceManager spiceManager = new SpiceManager( SpiceService.class );
+    @Inject
+    SpiceManager spiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
