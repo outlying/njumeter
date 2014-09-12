@@ -3,24 +3,40 @@ package com.antyzero.njumeter.ui;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
+import com.antyzero.njumeter.network.NetworkModule;
 import com.antyzero.njumeter.network.SpiceService;
+import com.google.common.collect.Lists;
 import com.octo.android.robospice.SpiceManager;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.ObjectGraph;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
  * BaseActivity created to provide some common behaviour for all activities in this application
  */
-class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 
-    private SpiceManager spiceManager = new SpiceManager( SpiceService.class );
+    @Inject
+    SpiceManager spiceManager;
+
+    @Inject
+    Messenger messenger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Messenger.INSTANCE.register( this );
+
+        ActivityModules.inject(this);
+
+        messenger.register(this);
     }
 
     /**
@@ -29,7 +45,7 @@ class BaseActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        spiceManager.start( this );
+        spiceManager.start(this);
     }
 
     /**
@@ -46,7 +62,7 @@ class BaseActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        Messenger.INSTANCE.unregister( this );
+        messenger.unregister( this );
         //Crouton.cancelAllCroutons();
         super.onDestroy();
     }
@@ -68,16 +84,7 @@ class BaseActivity extends Activity {
      */
     @SuppressWarnings( "UnusedDeclaration" )
     public void onEventMainThread( Message message ) {
-        Messenger.INSTANCE.process( this, message );
-    }
-
-    /**
-     * Access to SpiceManager
-     *
-     * @return SpiceManager object
-     */
-    protected SpiceManager getSpiceManager() {
-        return spiceManager;
+        messenger.process( this, message );
     }
 
     /**
@@ -90,5 +97,13 @@ class BaseActivity extends Activity {
     @SuppressWarnings( "unchecked" )
     protected <T> T findView( int viewId ) {
         return (T) findViewById( viewId );
+    }
+
+    protected SpiceManager getSpiceManager() {
+        return spiceManager;
+    }
+
+    protected Messenger getMessenger() {
+        return messenger;
     }
 }

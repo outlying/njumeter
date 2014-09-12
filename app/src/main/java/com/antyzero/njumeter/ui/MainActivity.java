@@ -10,10 +10,18 @@ import android.widget.Button;
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
+import com.antyzero.njumeter.network.NetworkModule;
+import com.octo.android.robospice.SpiceManager;
 
+import javax.inject.Inject;
+
+import dagger.ObjectGraph;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
+/**
+ * ...
+ */
 public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
@@ -42,7 +50,7 @@ public class MainActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Messenger.INSTANCE.message("test" + System.currentTimeMillis());
+                messenger.message("test" + System.currentTimeMillis());
             }
         });
     }
