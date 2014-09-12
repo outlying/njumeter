@@ -59,7 +59,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
             throw new IllegalStateException("Extra '" + EXTRA_ACTION + "' is required to start this Activity");
         }
 
-        ObjectGraph.create(NetworkModule.class).inject(this);
+        ObjectGraph.create(BaseActivity.MODULES).inject(this);
 
         action = (Action) getIntent().getSerializableExtra(EXTRA_ACTION);
 

@@ -28,9 +28,6 @@ public class MainActivity extends BaseActivity {
 
     private Button button;
 
-    @Inject
-    SpiceManager spiceManager;
-
     /**
      * {@inheritDoc}
      */
@@ -77,23 +74,5 @@ public class MainActivity extends BaseActivity {
                 //Messenger.INSTANCE.message("Konto nie utworzone");
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        spiceManager.start(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onStop() {
-        spiceManager.shouldStop();
-        super.onStop();
     }
 }

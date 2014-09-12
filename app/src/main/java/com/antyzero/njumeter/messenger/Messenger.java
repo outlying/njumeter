@@ -10,9 +10,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  *
  */
-public enum Messenger {
-
-    INSTANCE;
+public class Messenger {
 
     private final EventBus eventBus = EventBus.getDefault();
 

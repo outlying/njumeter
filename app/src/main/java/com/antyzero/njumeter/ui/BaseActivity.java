@@ -8,7 +8,11 @@ import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.NetworkModule;
 import com.antyzero.njumeter.network.SpiceService;
+import com.google.common.collect.Lists;
 import com.octo.android.robospice.SpiceManager;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,12 +22,39 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 /**
  * BaseActivity created to provide some common behaviour for all activities in this application
  */
-abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
+
+    @Inject
+    SpiceManager spiceManager;
+
+    @Inject
+    Messenger messenger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Messenger.INSTANCE.register( this );
+
+        ActivityModules.inject(this);
+
+        messenger.register(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        spiceManager.start(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
     }
 
     /**
@@ -31,7 +62,7 @@ abstract class BaseActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        Messenger.INSTANCE.unregister( this );
+        messenger.unregister( this );
         //Crouton.cancelAllCroutons();
         super.onDestroy();
     }
@@ -53,7 +84,7 @@ abstract class BaseActivity extends Activity {
      */
     @SuppressWarnings( "UnusedDeclaration" )
     public void onEventMainThread( Message message ) {
-        Messenger.INSTANCE.process( this, message );
+        messenger.process( this, message );
     }
 
     /**
@@ -66,5 +97,13 @@ abstract class BaseActivity extends Activity {
     @SuppressWarnings( "unchecked" )
     protected <T> T findView( int viewId ) {
         return (T) findViewById( viewId );
+    }
+
+    protected SpiceManager getSpiceManager() {
+        return spiceManager;
+    }
+
+    protected Messenger getMessenger() {
+        return messenger;
     }
 }
