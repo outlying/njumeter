@@ -1,54 +1,90 @@
 package com.antyzero.njumeter.network.html;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by tornax on 04.09.14.
+ *
  */
 public class Form {
 
+    private static final String REGEXR_FORM = "<form(?=(?:.*?id=\"(.+?)\"))(?=(?:.*?action=\"(.+?)\")?)(?=(?:.*?method=\"(.+?)\")?).*?>(.*?)</form>";
+
+    private static final Pattern PATTERN_FORM = Pattern.compile( REGEXR_FORM );
+
+    private final List<Input> inputs;
+
     private String id;
     private String action;
+
     private Method method;
 
-    private Form(String formHtmlContent) {
+    private Form( Builder builder ) {
 
-        // TODO process content
+        Matcher matcher = PATTERN_FORM.matcher( builder.html );
+
+        if( !matcher.find() ) {
+            throw new IllegalArgumentException( "No matching <form /> inside given string" );
+        }
+
+        id = matcher.group( 1 );
+        action = matcher.group( 2 );
+        method = Method.valueOf( matcher.group( 3 ).toUpperCase() );
+
+        inputs = Input.from( matcher.group( 4 ) );
     }
 
     /**
      *
      *
      * @param html
-     * @param formId
      * @return
      */
-    public static Form fromWithId(String html, String formId){
-
-        Form form = null;
-
-        String stringPattern = String.format(
-                "(<form.?id=\"%s?\".*?>(.+?)</form>)", Pattern.quote(formId));
-
-        Pattern pattern = Pattern.compile(stringPattern);
-
-        Matcher matcher = pattern.matcher(html);
-
-        if(matcher.find()){
-
-
-
-            form = new Form("");
-        }
-
-        return form;
+    public static Builder from( String html ) {
+        return new Builder( html );
     }
 
+    /**
+     *
+     */
     public enum Method {
-
         GET, POST
+    }
 
+    /**
+     *
+     */
+    public static final class Builder {
 
+        private String html;
+        private String formId;
+
+        /**
+         * @param html of website
+         */
+        public Builder( String html ) {
+            this.html = html;
+        }
+
+        /**
+         * Adds search criteria
+         *
+         * @param formId only form with given Id
+         * @return Builder object
+         */
+        public Builder withId( String formId ) {
+            this.formId = formId;
+            return this;
+        }
+
+        /**
+         * Building
+         *
+         * @return new Form object
+         */
+        public Form build() {
+            return new Form( this );
+        }
     }
 }

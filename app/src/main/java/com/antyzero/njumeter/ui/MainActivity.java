@@ -11,7 +11,10 @@ import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.NetworkModule;
+import com.antyzero.njumeter.network.request.AuthenticationRequest;
+import com.antyzero.njumeter.network.request.RequestListener;
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.exception.SpiceException;
 
 import javax.inject.Inject;
 
@@ -47,12 +50,24 @@ public class MainActivity extends BaseActivity {
         setContentView( R.layout.activity_main );
 
         button = findView(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                messenger.message("test" + System.currentTimeMillis());
+            public void onClick( View v ) {
+                spiceManager.execute(
+                        new AuthenticationRequest( "123456789", "123" ),
+                        new RequestListener<Boolean>() {
+                            @Override
+                            public void onFailure( SpiceException spiceException ) {
+
+                            }
+
+                            @Override
+                            public void onSuccess( Boolean aBoolean ) {
+
+                            }
+                        });
             }
-        });
+        } );
     }
 
     /**

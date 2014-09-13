@@ -1,6 +1,7 @@
 package com.antyzero.njumeter.network.request;
 
 import com.antyzero.njumeter.network.Url;
+import com.antyzero.njumeter.network.html.Form;
 
 /**
  *
@@ -22,6 +23,9 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
 
         String websiteLogin = getRestTemplate().getForObject(Url.login(), String.class);
 
+        Form form = Form.from( websiteLogin ).withId( "portal-login-form" ).build();
+
+        form.toString();
 
         return true;
     }

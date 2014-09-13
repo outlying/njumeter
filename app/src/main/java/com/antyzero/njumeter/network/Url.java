@@ -3,7 +3,7 @@ package com.antyzero.njumeter.network;
 import java.net.URI;
 
 /**
- *
+ * http://www.njumobile.pl/
  */
 public class Url {
 
