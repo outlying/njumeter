@@ -48,25 +48,6 @@ public class Input {
         return type;
     }
 
-    /**
-     *
-     *
-     * @param html
-     * @return
-     */
-    public static List<Input> from( String html ) {
-
-        List<Input> inputList = new ArrayList<Input>();
-
-        Matcher matcher = PATTERN_INPUT.matcher( html );
-
-        while( matcher.find() ){
-            inputList.add( new Input( matcher.group( 0 )) );
-        }
-
-        return inputList;
-    }
-
     @Override
     public String toString() {
         return "Input{" +

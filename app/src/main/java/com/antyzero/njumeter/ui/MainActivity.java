@@ -4,21 +4,14 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
-import com.antyzero.njumeter.messenger.Messenger;
-import com.antyzero.njumeter.network.NetworkModule;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
-import javax.inject.Inject;
-
-import dagger.ObjectGraph;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -36,38 +29,34 @@ public class MainActivity extends BaseActivity {
      */
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate(savedInstanceState);
+        super.onCreate( savedInstanceState );
 
         // First Activity creation
         if( savedInstanceState == null ) {
 
             // Check if we have at least one account, if not redirect user to login screen
-            if (AccountManager.get(this).getAccountsByType(BuildConfig.ACCOUNT_TYPE).length == 0) {
-                AuthenticationActivity.startForNewAccountResult(this, REQUEST_CODE_ACCOUNT_CREATE);
+            if( AccountManager.get( this ).getAccountsByType( BuildConfig.ACCOUNT_TYPE ).length == 0 ) {
+                AuthenticationActivity.startForNewAccountResult( this, REQUEST_CODE_ACCOUNT_CREATE );
             }
         }
 
         setContentView( R.layout.activity_main );
 
-        button = findView(R.id.button);
-        button.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick( View v ) {
-                spiceManager.execute(
-                        new AuthenticationRequest( "123456789", "123" ),
-                        new RequestListener<Boolean>() {
-                            @Override
-                            public void onFailure( SpiceException spiceException ) {
+        button = findView( R.id.button );
 
-                            }
+        spiceManager.execute(
+                new AuthenticationRequest( "123456789", "123" ),
+                new RequestListener<Boolean>() {
+                    @Override
+                    public void onFailure( SpiceException spiceException ) {
 
-                            @Override
-                            public void onSuccess( Boolean aBoolean ) {
+                    }
 
-                            }
-                        });
-            }
-        } );
+                    @Override
+                    public void onSuccess( Boolean aBoolean ) {
+
+                    }
+                } );
     }
 
     /**
@@ -83,7 +72,7 @@ public class MainActivity extends BaseActivity {
 
                 //Messenger.INSTANCE.message( "Konto utworzone" );
 
-                Crouton.makeText(this, "QQQ", Style.INFO).show();
+                Crouton.makeText( this, "QQQ", Style.INFO ).show();
 
             } else {
                 //Messenger.INSTANCE.message("Konto nie utworzone");

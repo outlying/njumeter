@@ -32,7 +32,7 @@ public class Form {
         action = matcher.group( 2 );
         method = Method.valueOf( matcher.group( 3 ).toUpperCase() );
 
-        inputs = Input.from( matcher.group( 4 ) );
+        inputs = Inputs.from( matcher.group( 4 ) );
     }
 
     /**
