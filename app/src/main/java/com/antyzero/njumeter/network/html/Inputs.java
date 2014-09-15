@@ -5,12 +5,19 @@ import com.antyzero.njumeter.tools.ForwardingList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by tornax on 14.09.14.
  */
 public class Inputs extends ForwardingList<Input> {
+
+    private final static String REGEXR_INPUT = "<input.*?>";
+
+    private final static Pattern PATTERN_INPUT = Pattern.compile( REGEXR_INPUT );
 
     /**
      *
@@ -48,7 +55,7 @@ public class Inputs extends ForwardingList<Input> {
      * @param html
      * @return
      */
-    public static List<Input> from( String html ) {
+    public static Inputs from( String html ) {
 
         Inputs inputs = new Inputs();
 
@@ -62,13 +69,17 @@ public class Inputs extends ForwardingList<Input> {
     }
 
     /**
+     * ...
      *
-     *
-     * @return
+     * @return Map representing fields for POST request
      */
     public Map<String,String> toMap(){
 
         Map<String,String> result = new LinkedHashMap<>();
+
+        for(Input input : this){
+            result.put( input.getName(), input.getValue() );
+        }
 
         return result;
     }

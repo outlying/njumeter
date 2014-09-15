@@ -13,7 +13,7 @@ public class Form {
 
     private static final Pattern PATTERN_FORM = Pattern.compile( REGEXR_FORM );
 
-    private final List<Input> inputs;
+    private final Inputs inputs;
 
     private String id;
     private String action;
@@ -33,6 +33,24 @@ public class Form {
         method = Method.valueOf( matcher.group( 3 ).toUpperCase() );
 
         inputs = Inputs.from( matcher.group( 4 ) );
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public String getAction() {
+        return action;
+    }
+
+    /**
+     * ...
+     *
+     * @return list of Input fields
+     */
+    public Inputs getInputs() {
+        return inputs;
     }
 
     /**

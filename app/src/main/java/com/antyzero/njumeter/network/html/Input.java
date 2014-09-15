@@ -10,10 +10,8 @@ import java.util.regex.Pattern;
  */
 public class Input {
 
-    private final static String REGEXR_INPUT = "<input.*?>";
     private final static String REGEXR_FIELDS = "(?=(?:.*?name=\"(.*?)\"))(?=(?:.*?value=\"(.*?)\"))(?=(?:.*?type=\"(.*?)\"))";
 
-    private final static Pattern PATTERN_INPUT = Pattern.compile( REGEXR_INPUT );
     private final static Pattern PATTERN_FIELDS = Pattern.compile( REGEXR_FIELDS );
 
     private String name;
@@ -25,7 +23,7 @@ public class Input {
      *
      * @param htmlInput
      */
-    private Input( String htmlInput ) {
+    Input( String htmlInput ) {
 
         Matcher matcher = PATTERN_FIELDS.matcher( htmlInput );
 
