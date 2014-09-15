@@ -22,11 +22,8 @@ import java.util.List;
  */
 public class AuthenticationRequest extends BaseRequest<Boolean> {
 
-    private final static List<String> FIELDS_USER = Lists.newArrayList(
-            "login-form");
-
-    private final static List<String> FIELDS_PASSWORD = Lists.newArrayList(
-            "password-form");
+    private final static String FIELD_USER = "login-form";
+    private final static String FIELD_PASSWORD = "password-form";
 
     private final static List<String> FIELDS_ALL;
 
@@ -38,9 +35,11 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
      *
      */
     static {
-        List<String> fields = new ArrayList<>(FIELDS_USER);
 
-        fields.addAll(FIELDS_PASSWORD);
+        List<String> fields = new ArrayList<>();
+
+        fields.add(FIELD_USER);
+        fields.add(FIELD_PASSWORD);
 
         FIELDS_ALL = fields;
     }
@@ -73,13 +72,8 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
 
         checkKeys(fields);
 
-        for (String fieldPassword : FIELDS_PASSWORD) {
-            fields.set(fieldPassword, password);
-        }
-
-        for (String fieldUser : FIELDS_USER) {
-            fields.set(fieldUser, user);
-        }
+        fields.set(FIELD_PASSWORD, password);
+        fields.set(FIELD_USER, user);
 
         HttpHeaders requestHeaders = new HttpHeaders();
 
