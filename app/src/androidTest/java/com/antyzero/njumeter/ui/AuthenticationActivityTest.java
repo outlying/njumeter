@@ -1,8 +1,12 @@
 package com.antyzero.njumeter.ui;
 
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 
+import com.antyzero.njumeter.NjuApplication;
+
+import static com.antyzero.njumeter.ui.AuthenticationActivity.Action.ADD_NEW_ACCOUNT;
 import static org.assertj.android.api.Assertions.assertThat;
 
 public class AuthenticationActivityTest extends ActivityInstrumentationTestCase2<AuthenticationActivity> {
@@ -11,6 +15,20 @@ public class AuthenticationActivityTest extends ActivityInstrumentationTestCase2
         super(AuthenticationActivity.class);
     }
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        Context context = getInstrumentation().getContext();
+
+        setActivityIntent( AuthenticationActivity.intent( context, ADD_NEW_ACCOUNT ) );
+    }
+
+    /**
+     * Simple creation test
+     *
+     * @throws Exception
+     */
     public void testCreation() throws Exception {
         assertThat(getActivity()).isNotNull();
     }

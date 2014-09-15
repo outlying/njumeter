@@ -16,19 +16,13 @@ import android.widget.EditText;
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Messenger;
-import com.antyzero.njumeter.network.NetworkModule;
-import com.antyzero.njumeter.network.SpiceService;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
-import java.io.Serializable;
-
 import javax.inject.Inject;
-
-import dagger.ObjectGraph;
 
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
 
@@ -36,8 +30,6 @@ import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
  * Provides authentication form
  */
 public class AuthenticationActivity extends AccountAuthenticatorActivity implements View.OnClickListener {
-
-    private static final String EXTRA_ACTION = "EXTRA_ACTION";
 
     public static final String AUTH_TOKEN_DEFAULT = "000000000000000";
     public static final String AUTH_TOKEN_TYPE = "Default";
@@ -55,27 +47,31 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     EditText editTextPassword;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate( Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
 
-        if (!getIntent().hasExtra(EXTRA_ACTION)) {
-            throw new IllegalStateException("Extra '" + EXTRA_ACTION + "' is required to start this Activity");
+        if( TextUtils.isEmpty( getIntent().getAction() ) ) {
+            throw new IllegalStateException( "Missing Intent action, required to start this Activity" );
         }
 
-        NjuApplication.get(this).inject(this);
+        try {
+            action = Action.valueOf( getIntent().getAction() );
+        } catch( Exception e ){
+            throw new IllegalArgumentException( "Given action is not supported" );
+        }
 
-        action = (Action) getIntent().getSerializableExtra(EXTRA_ACTION);
+        NjuApplication.get( this ).inject( this );
 
-        setContentView(R.layout.activity_authentication);
+        setContentView( R.layout.activity_authentication );
 
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
+        button = (Button) findViewById( R.id.button );
+        button.setOnClickListener( this );
 
-        editTextUser = (EditText) findViewById(R.id.editTextUser);
-        editTextUser.addTextChangedListener(new UserTextWatcher());
+        editTextUser = (EditText) findViewById( R.id.editTextUser );
+        editTextUser.addTextChangedListener( new UserTextWatcher() );
 
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextPassword.addTextChangedListener(new PasswordTextWatcher());
+        editTextPassword = (EditText) findViewById( R.id.editTextPassword );
+        editTextPassword.addTextChangedListener( new PasswordTextWatcher() );
     }
 
     /**
@@ -84,7 +80,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onStart() {
         super.onStart();
-        spiceManager.start(this);
+        spiceManager.start( this );
     }
 
     /**
@@ -102,9 +98,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * {@inheritDoc}
      */
     @Override
-    public void onClick(View v) {
+    public void onClick( View v ) {
 
-        setFormEnable(false);
+        setFormEnable( false );
 
         // TODO validation ?
 
@@ -112,8 +108,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         CharSequence password = editTextPassword.getText();
 
         spiceManager.execute(
-                new AuthenticationRequest(user, password),
-                new AuthenticationRequestListener());
+                new AuthenticationRequest( user, password ),
+                new AuthenticationRequestListener() );
     }
 
     /**
@@ -121,10 +117,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      *
      * @param enable new state value
      */
-    private void setFormEnable(boolean enable) {
-        editTextUser.setEnabled(enable);
-        editTextPassword.setEnabled(enable);
-        button.setEnabled(enable);
+    private void setFormEnable( boolean enable ) {
+        editTextUser.setEnabled( enable );
+        editTextPassword.setEnabled( enable );
+        button.setEnabled( enable );
     }
 
     /**
@@ -133,35 +129,35 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param userName
      * @param password
      */
-    private void registerNewAccount(String userName, String password) {
+    private void registerNewAccount( String userName, String password ) {
 
         final Intent intent = new Intent();
 
-        intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, userName);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
-        intent.putExtra(AccountManager.KEY_AUTHTOKEN, AUTH_TOKEN_DEFAULT);
+        intent.putExtra( AccountManager.KEY_ACCOUNT_NAME, userName );
+        intent.putExtra( AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE );
+        intent.putExtra( AccountManager.KEY_AUTHTOKEN, AUTH_TOKEN_DEFAULT );
 
-        final Account account = new Account(userName, ACCOUNT_TYPE);
+        final Account account = new Account( userName, ACCOUNT_TYPE );
 
-        AccountManager accountManager = AccountManager.get(this);
+        AccountManager accountManager = AccountManager.get( this );
 
-        switch (action){
+        switch( action ) {
 
             case ADD_NEW_ACCOUNT:
-                accountManager.addAccountExplicitly(account, password, null);
-                accountManager.setAuthToken(account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT);
+                accountManager.addAccountExplicitly( account, password, null );
+                accountManager.setAuthToken( account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT );
                 break;
 
             case CHANGE_PASSWORD:
-                accountManager.setPassword(account, password);
+                accountManager.setPassword( account, password );
                 break;
 
             default:
-                throw new IllegalStateException("Unsupported enum Value");
+                throw new IllegalStateException( "Unsupported enum Value" );
         }
 
-        setAccountAuthenticatorResult(intent.getExtras());
-        setResult(RESULT_OK, intent);
+        setAccountAuthenticatorResult( intent.getExtras() );
+        setResult( RESULT_OK, intent );
         finish();
     }
 
@@ -170,11 +166,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      *
      * @param activity require for start
      */
-    public static void startForNewAccountResult(Activity activity, int requestCode) {
+    public static void startForNewAccountResult( Activity activity, int requestCode ) {
 
-        Intent intent = intent(activity, Action.ADD_NEW_ACCOUNT);
+        Intent intent = intent( activity, Action.ADD_NEW_ACCOUNT );
 
-        activity.startActivityForResult(intent, requestCode);
+        activity.startActivityForResult( intent, requestCode );
     }
 
     /**
@@ -183,11 +179,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param context required for Intent
      * @return Intent object
      */
-    public static Intent intent(Context context, Action action) {
+    public static Intent intent( Context context, Action action ) {
 
-        final Intent intent = new Intent(context, AuthenticationActivity.class);
+        final Intent intent = new Intent( context, AuthenticationActivity.class );
 
-        intent.putExtra(EXTRA_ACTION, action);
+        intent.setAction( action.name() );
 
         return intent;
     }
@@ -198,11 +194,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     private class UserTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged(Editable editable) {
+        public void afterTextChanged( Editable editable ) {
 
             final boolean validLength = editable.length() >= 9;
 
-            editTextPassword.setEnabled(validLength);
+            editTextPassword.setEnabled( validLength );
         }
     }
 
@@ -212,9 +208,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     private class PasswordTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged(Editable editable) {
+        public void afterTextChanged( Editable editable ) {
 
-            button.setEnabled(!TextUtils.isEmpty(editable));
+            button.setEnabled( !TextUtils.isEmpty( editable ) );
         }
     }
 
@@ -224,23 +220,23 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     private class AuthenticationRequestListener extends RequestListener<Boolean> {
 
         @Override
-        public void onFailure(SpiceException spiceException) {
+        public void onFailure( SpiceException spiceException ) {
 
             // TODO support different error types
 
-            messenger.message("Błędny login i/lub hasło, spróbuj ponownie");
+            messenger.message( "Błędny login i/lub hasło, spróbuj ponownie" );
 
             // Give user another chance
-            setFormEnable(true);
+            setFormEnable( true );
         }
 
         @Override
-        public void onSuccess(Boolean result) {
+        public void onSuccess( Boolean result ) {
 
-            final String userName = String.valueOf(editTextUser.getText());
-            final String password = String.valueOf(editTextPassword.getText());
+            final String userName = String.valueOf( editTextUser.getText() );
+            final String password = String.valueOf( editTextPassword.getText() );
 
-            registerNewAccount(userName, password);
+            registerNewAccount( userName, password );
         }
     }
 

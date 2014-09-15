@@ -1,6 +1,6 @@
 package com.antyzero.njumeter.network.html;
 
-import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
  */
 public class Form {
 
-    private static final String REGEXR_FORM = "<form(?=(?:.*?id=\"(.+?)\"))(?=(?:.*?action=\"(.+?)\")?)(?=(?:.*?method=\"(.+?)\")?).*?>(.*?)</form>";
+    private static final String REGEXR_FORM = "<form(?=(?:.*?id=\"(.+?)\"))(?=(?:.*?action=\"(.+?)\")?)(?=(?:" +
+            ".*?method=\"(.+?)\")?).*?>(.*?)</form>";
 
     private static final Pattern PATTERN_FORM = Pattern.compile( REGEXR_FORM );
 
@@ -20,6 +21,11 @@ public class Form {
 
     private Method method;
 
+    /**
+     *
+     *
+     * @param builder Form.Builder object
+     */
     private Form( Builder builder ) {
 
         Matcher matcher = PATTERN_FORM.matcher( builder.html );
@@ -30,14 +36,12 @@ public class Form {
 
         id = matcher.group( 1 );
         action = matcher.group( 2 );
-        method = Method.valueOf( matcher.group( 3 ).toUpperCase() );
+        method = Method.valueOf( matcher.group( 3 ).toUpperCase( Locale.getDefault() ) );
 
         inputs = Inputs.from( matcher.group( 4 ) );
     }
 
     /**
-     *
-     *
      * @return
      */
     public String getAction() {
@@ -54,8 +58,6 @@ public class Form {
     }
 
     /**
-     *
-     *
      * @param html
      * @return
      */
