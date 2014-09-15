@@ -11,12 +11,22 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.List;
 
 /**
  * Network service
  */
 public class SpiceService extends SpringAndroidSpiceService {
+
+    public SpiceService() {
+        super();
+
+        CookieManager cookieManager = new CookieManager(null, CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
+    }
 
     /**
      * {@inheritDoc}

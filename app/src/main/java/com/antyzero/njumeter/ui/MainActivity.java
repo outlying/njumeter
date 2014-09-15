@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
         button = findView( R.id.button );
 
         spiceManager.execute(
-                new AuthenticationRequest( "123456789", "123" ),
+                new AuthenticationRequest( "123123123", "asdqwezxc" ),
                 new RequestListener<Boolean>() {
                     @Override
                     public void onFailure( SpiceException spiceException ) {

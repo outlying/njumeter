@@ -1,5 +1,6 @@
 package com.antyzero.njumeter.network;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -12,10 +13,6 @@ import java.net.URI;
  */
 public class RequestFactory extends SimpleClientHttpRequestFactory {
 
-    private static final String HEADER_COOKIE = "Cookie";
-
-    private static String cookies = null;
-
     /**
      * Inject extra headers
      *
@@ -26,19 +23,10 @@ public class RequestFactory extends SimpleClientHttpRequestFactory {
 
         ClientHttpRequest request = super.createRequest(uri, httpMethod);
 
-        if(cookies != null){
-            request.getHeaders().set(HEADER_COOKIE, cookies);
-        }
+        final HttpHeaders headers = request.getHeaders();
+
+        headers.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.52 Chrome/28.0.1500.52 Safari/537.36");
 
         return request;
-    }
-
-    /**
-     * Updates cookie value for next requests
-     *
-     * @param newCookies
-     */
-    public static void setCookies(String newCookies){
-        RequestFactory.cookies = newCookies;
     }
 }

@@ -1,5 +1,6 @@
 package com.antyzero.njumeter.network.request;
 
+import com.antyzero.njumeter.network.RequestFactory;
 import com.antyzero.njumeter.network.Url;
 import com.antyzero.njumeter.network.html.Form;
 import com.google.common.collect.Lists;
@@ -79,6 +80,28 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
         for (String fieldUser : FIELDS_USER) {
             fields.set(fieldUser, user);
         }
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+
+        requestHeaders.set( "Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" );
+        requestHeaders.set( "Accept-Encoding", "gzip,deflate,sdch" );
+        requestHeaders.set( "Referer", String.valueOf( Url.login() ) );
+
+        requestHeaders.setCacheControl( "max-age=0" );
+
+        requestHeaders.setAcceptLanguage( "pl,en-US;q=0.8,en;q=0.6" );
+        requestHeaders.setContentType( MediaType.APPLICATION_FORM_URLENCODED );
+        requestHeaders.setAcceptEncoding( ContentCodingType.ALL );
+
+        HttpEntity<?> httpEntity = new HttpEntity<Object>( fields, requestHeaders );
+
+        ResponseEntity<String> entity = getRestTemplate().postForEntity(form.getAction(), httpEntity, String.class);
+
+        if( entity.getStatusCode().value() == 302){
+            entity = getRestTemplate().getForEntity(entity.getHeaders().getLocation(), String.class);
+        }
+
+        entity.toString();
 
         return true;
     }
