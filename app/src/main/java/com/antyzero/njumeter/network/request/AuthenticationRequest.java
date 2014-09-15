@@ -95,6 +95,8 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
             entity = getRestTemplate().getForEntity(entity.getHeaders().getLocation(), String.class);
         }
 
+        // TODO check errors
+
         entity.toString();
 
         return true;
