@@ -1,6 +1,5 @@
 package com.antyzero.njumeter.network.request;
 
-import com.antyzero.njumeter.network.RequestFactory;
 import com.antyzero.njumeter.network.Url;
 import com.antyzero.njumeter.network.html.Form;
 import com.google.common.collect.Lists;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,8 @@ import java.util.List;
  *
  */
 public class AuthenticationRequest extends BaseRequest<Boolean> {
+
+    private final static String REGEXR_ERROR = "error validation-error visible.+?>(.+?)</";
 
     private final static List<String> FIELDS_USER = Lists.newArrayList(
             "login-form");
@@ -87,7 +87,7 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
         requestHeaders.set( "Accept-Encoding", "gzip,deflate,sdch" );
         requestHeaders.set( "Referer", String.valueOf( Url.login() ) );
 
-        requestHeaders.setCacheControl( "max-age=0" );
+        requestHeaders.setCacheControl("max-age=0");
 
         requestHeaders.setAcceptLanguage( "pl,en-US;q=0.8,en;q=0.6" );
         requestHeaders.setContentType( MediaType.APPLICATION_FORM_URLENCODED );
