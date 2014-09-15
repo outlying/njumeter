@@ -60,7 +60,9 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
     @Override
     public Boolean loadDataFromNetwork() throws Exception {
 
-        String websiteLogin = getRestTemplate().getForObject( Url.login(), String.class );
+        ResponseEntity<String> entityLogin = getRestTemplate().getForEntity(Url.login(), String.class);
+
+        String websiteLogin = entityLogin.getBody();
 
         Form form = Form.from( websiteLogin ).withId( "portal-login-form" ).build();
 

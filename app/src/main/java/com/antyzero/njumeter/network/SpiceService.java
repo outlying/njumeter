@@ -24,7 +24,7 @@ public class SpiceService extends SpringAndroidSpiceService {
     @Override
     public RestTemplate createRestTemplate() {
 
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate(new RequestFactory());
 
         FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
         StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
