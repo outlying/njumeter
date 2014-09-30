@@ -1,5 +1,8 @@
 package com.antyzero.njumeter.messenger;
 
+import static de.keyboardsurfer.android.widget.crouton.Style.ALERT;
+import static de.keyboardsurfer.android.widget.crouton.Style.INFO;
+
 /**
  * ...
  */
@@ -68,8 +71,20 @@ public class Message {
      * Predefined styles
      */
     public enum Style {
-        DEFAULT,
-        ERROR
+        DEFAULT( INFO ),
+        ERROR( ALERT );
+
+        final de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
+
+        /**
+         *
+         *
+         * @param croutonStyle
+         */
+        private Style(de.keyboardsurfer.android.widget.crouton.Style croutonStyle) {
+
+            this.croutonStyle = croutonStyle;
+        }
     }
 
     /**

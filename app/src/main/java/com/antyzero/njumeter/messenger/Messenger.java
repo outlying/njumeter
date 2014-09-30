@@ -57,8 +57,7 @@ public final class Messenger {
      * @param message to display
      */
     public void process( final Activity activity, final Message message ) {
-        Crouton.showText( activity, message.getText(), Style.INFO );
-        // Redundant to see if Crouton is working
-        Toast.makeText(activity, "Crouton above ? " + message.getText(), Toast.LENGTH_SHORT).show();
+
+        Crouton.showText( activity, message.getText(), message.getStyle().croutonStyle );
     }
 }
