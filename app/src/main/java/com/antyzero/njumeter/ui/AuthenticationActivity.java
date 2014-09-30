@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
+import static com.antyzero.njumeter.messenger.Message.Style;
 
 /**
  * Provides authentication form
@@ -63,7 +64,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
             throw new IllegalArgumentException( "Given action is not supported" );
         }
 
-        NjuApplication.get( this ).inject( this );
+        NjuApplication.get( this ).inject(this);
 
         setContentView(R.layout.activity_authentication);
 
@@ -237,9 +238,13 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         @Override
         public void onFailure( SpiceException spiceException ) {
 
-            // TODO support different error types
+            Message.Builder builder = Message.prepare().setStyle(Style.ERROR);
 
-            messenger.message( "Błędny login i/lub hasło, spróbuj ponownie" );
+            // TODO support different errors
+
+            builder.setMessage(getString(R.string.message_error_auth));
+
+            messenger.message( builder.build() );
 
             // Give user another chance
             setFormEnable( true );

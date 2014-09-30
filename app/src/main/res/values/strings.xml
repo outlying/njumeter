@@ -5,5 +5,6 @@
 
     <string name="title_activity_main">@string/app_name</string>
     <string name="title_activity_authentication">Auth</string>
+    <string name="message_error_auth">Błędny numer telefonu i/lub hasło</string>
 
 </resources>
