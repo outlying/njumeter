@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.R;
+import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
@@ -23,6 +24,8 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
 import javax.inject.Inject;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
 
@@ -62,7 +65,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         NjuApplication.get( this ).inject( this );
 
-        setContentView( R.layout.activity_authentication );
+        messenger.register(this);
+
+        setContentView(R.layout.activity_authentication);
 
         button = (Button) findViewById( R.id.button );
         button.setOnClickListener( this );
@@ -90,6 +95,25 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     protected void onStop() {
         spiceManager.shouldStop();
         super.onStop();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onDestroy() {
+        messenger.unregister( this );
+        super.onDestroy();
+    }
+
+    /**
+     * Catch message event and display proper dialog / toast / crouton
+     *
+     * @param message event
+     */
+    @SuppressWarnings( "UnusedDeclaration" )
+    public void onEventMainThread( Message message ) {
+        messenger.process( this, message );
     }
 
     /**

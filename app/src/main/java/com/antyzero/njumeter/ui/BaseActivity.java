@@ -63,7 +63,6 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onDestroy() {
         messenger.unregister( this );
-        //Crouton.cancelAllCroutons();
         super.onDestroy();
     }
 

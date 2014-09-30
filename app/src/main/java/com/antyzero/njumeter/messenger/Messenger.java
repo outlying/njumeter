@@ -39,6 +39,7 @@ public class Messenger {
      */
     public void unregister( Activity subscriber ) {
         eventBus.unregister( subscriber );
+        Crouton.cancelAllCroutons();
     }
 
     /**

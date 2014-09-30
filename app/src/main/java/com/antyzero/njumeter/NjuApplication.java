@@ -10,7 +10,7 @@ import dagger.ObjectGraph;
 /**
  *
  */
-public class NjuApplication extends Application {
+public final class NjuApplication extends Application {
 
     private ObjectGraph objectGraph;
 
