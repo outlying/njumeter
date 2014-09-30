@@ -67,5 +67,6 @@ public final class Messenger {
     public void process( final Activity activity, final Message message ) {
 
         Crouton.showText(activity, message.getText(), message.getStyle().croutonStyle);
+        eventBus.removeStickyEvent(message);
     }
 }
