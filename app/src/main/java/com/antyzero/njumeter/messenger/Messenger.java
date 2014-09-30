@@ -50,7 +50,7 @@ public final class Messenger {
      * @param subscriber Activity for displaying messages
      */
     public void unregister( Activity subscriber ) {
-        eventBus.unregister(subscriber);
+        eventBus.unregister( subscriber );
     }
 
     /**

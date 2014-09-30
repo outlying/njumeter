@@ -30,12 +30,14 @@ public abstract class BaseActivity extends Activity {
     @Inject
     Messenger messenger;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ActivityModules.inject(this);
-
     }
 
     /**
@@ -56,24 +58,6 @@ public abstract class BaseActivity extends Activity {
         spiceManager.shouldStop();
         messenger.unregister(this);
         super.onStop();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    /**
-     * This event listener is only created because EventBus will throw Exception on object without any event listeners
-     *
-     * @param dumbEvent blank event
-     */
-    @SuppressWarnings("UnusedDeclaration")
-    public void onEvent( Object dumbEvent ) {
-        // do nothing
     }
 
     /**
