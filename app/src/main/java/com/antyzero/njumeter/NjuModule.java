@@ -6,6 +6,7 @@ import com.antyzero.njumeter.messenger.MessengerModule;
 import com.antyzero.njumeter.network.NetworkModule;
 
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Application module
