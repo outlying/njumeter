@@ -8,7 +8,7 @@ import com.antyzero.njumeter.network.SpiceService;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Created by tornax on 04.09.14.
+ * Special test case for RoboSpice requests testing
  */
 abstract class RequestTestCase extends ApplicationTestCase<NjuApplication> {
 

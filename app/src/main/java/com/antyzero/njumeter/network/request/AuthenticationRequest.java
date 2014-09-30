@@ -1,5 +1,7 @@
 package com.antyzero.njumeter.network.request;
 
+import android.text.Html;
+
 import com.antyzero.njumeter.network.Url;
 import com.antyzero.njumeter.network.html.Form;
 
@@ -13,11 +15,17 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  */
 public class AuthenticationRequest extends BaseRequest<Boolean> {
+
+    public static final String REGEX_ERROR = "error validation-error visible.+?>(.+?)<\\/";
+
+    private final static Pattern PATTERN_ERROR = Pattern.compile(REGEX_ERROR);
 
     private final static String FIELD_USER = "login-form";
     private final static String FIELD_PASSWORD = "password-form";
@@ -92,11 +100,32 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
             entity = getRestTemplate().getForEntity(entity.getHeaders().getLocation(), String.class);
         }
 
-        // TODO check errors
+        String message = findError( entity );
 
-        entity.toString();
+        if( message != null ){
+            throw new ServerSideException( message );
+        }
 
         return true;
+    }
+
+    /**
+     * Find error in server response
+     *
+     * @param entity
+     * @throws ServerSideException
+     */
+    private String findError(ResponseEntity<String> entity) throws ServerSideException {
+
+        String result = null;
+
+        Matcher matcherError = PATTERN_ERROR.matcher(entity.getBody());
+
+        if(matcherError.find()){
+            result = Html.fromHtml(matcherError.group(1)).toString();
+        }
+
+        return result;
     }
 
     /**
