@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity {
                 builder.setStyle( Message.Style.ERROR );
             }
 
+            messenger.register( this );
             messenger.message( builder.build() );
         }
     }

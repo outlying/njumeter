@@ -38,7 +38,10 @@ public final class Messenger {
      * @param subscriber Activity for displaying messages
      */
     public void register( Activity subscriber ) {
-        eventBus.register( subscriber );
+
+        if( !eventBus.isRegistered( subscriber ) ) {
+            eventBus.register( subscriber );
+        }
     }
 
     /**
@@ -47,7 +50,7 @@ public final class Messenger {
      * @param subscriber Activity for displaying messages
      */
     public void unregister( Activity subscriber ) {
-        eventBus.unregister( subscriber );
+        eventBus.unregister(subscriber);
     }
 
     /**
@@ -58,6 +61,6 @@ public final class Messenger {
      */
     public void process( final Activity activity, final Message message ) {
 
-        Crouton.showText( activity, message.getText(), message.getStyle().croutonStyle );
+        Crouton.showText(activity, message.getText(), message.getStyle().croutonStyle);
     }
 }

@@ -45,14 +45,6 @@ public abstract class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         spiceManager.start(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
         messenger.register(this);
     }
 
