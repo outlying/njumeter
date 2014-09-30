@@ -21,7 +21,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  * ...
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
 
@@ -42,11 +42,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         setContentView( R.layout.activity_main );
-
-        findView( R.id.button ).setOnClickListener(this);
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -68,10 +64,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             messenger.message( builder.build() );
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        messenger.message("Q");
     }
 }

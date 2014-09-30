@@ -58,7 +58,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        messenger.register( this );
+        messenger.register(this);
     }
 
     /**
@@ -88,15 +88,25 @@ public abstract class BaseActivity extends Activity {
      * @param <T>    generic type for method
      * @return View class object
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings({"unchecked", "UnusedDeclaration"})
     protected <T extends View> T findView( int viewId ) {
         return (T) findViewById( viewId );
     }
 
+    /**
+     * Access to SpiceManager for extending classes
+     *
+     * @return SpiceManager object
+     */
     protected SpiceManager getSpiceManager() {
         return spiceManager;
     }
 
+    /**
+     * Access to Messenger for extending classes
+     *
+     * @return SpiceManager object
+     */
     protected Messenger getMessenger() {
         return messenger;
     }
