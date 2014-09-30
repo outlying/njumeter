@@ -72,7 +72,8 @@ public class Message {
      */
     public enum Style {
         DEFAULT( INFO ),
-        ERROR( ALERT );
+        ERROR( ALERT ),
+        CONFIRM( de.keyboardsurfer.android.widget.crouton.Style.CONFIRM );
 
         final de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 

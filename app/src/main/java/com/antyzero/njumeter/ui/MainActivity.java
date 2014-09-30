@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
+import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -44,20 +45,6 @@ public class MainActivity extends BaseActivity {
         setContentView( R.layout.activity_main );
 
         button = findView( R.id.button );
-
-        spiceManager.execute(
-                new AuthenticationRequest( "123123123", "asdqwezxc" ),
-                new RequestListener<Boolean>() {
-                    @Override
-                    public void onFailure( SpiceException spiceException ) {
-
-                    }
-
-                    @Override
-                    public void onSuccess( Boolean aBoolean ) {
-
-                    }
-                } );
     }
 
     /**
@@ -68,15 +55,14 @@ public class MainActivity extends BaseActivity {
 
         if( requestCode == REQUEST_CODE_ACCOUNT_CREATE ) {
 
-            // TODO resources
+            Message.Builder builder = Message.prepare();
+
             if( resultCode == Activity.RESULT_OK ) {
-
-                //Messenger.INSTANCE.message( "Konto utworzone" );
-
-                Crouton.makeText( this, "QQQ", Style.INFO ).show();
-
+                builder.setMessage( getString( R.string.message_confirm_account_created ) );
+                builder.setStyle( Message.Style.CONFIRM );
             } else {
-                //Messenger.INSTANCE.message("Konto nie utworzone");
+                builder.setMessage( getString( R.string.message_confirm_account_not_created ) );
+                builder.setStyle( Message.Style.ERROR );
             }
         }
     }
