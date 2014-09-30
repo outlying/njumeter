@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.antyzero.njumeter.BuildConfig;
@@ -20,11 +21,9 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  * ...
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
-
-    private Button button;
 
     /**
      * {@inheritDoc}
@@ -44,8 +43,10 @@ public class MainActivity extends BaseActivity {
 
         setContentView( R.layout.activity_main );
 
-        button = findView( R.id.button );
+        findView( R.id.button ).setOnClickListener(this);
     }
+
+
 
     /**
      * {@inheritDoc}
@@ -62,10 +63,15 @@ public class MainActivity extends BaseActivity {
                 builder.setStyle( Message.Style.CONFIRM );
             } else {
                 builder.setMessage( getString( R.string.message_confirm_account_not_created ) );
-                builder.setStyle( Message.Style.ERROR );
+                builder.setStyle(Message.Style.ERROR);
             }
 
             messenger.message( builder.build() );
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        messenger.message("Q");
     }
 }

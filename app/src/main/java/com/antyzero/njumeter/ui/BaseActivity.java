@@ -2,6 +2,7 @@ package com.antyzero.njumeter.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.messenger.Message;
@@ -38,6 +39,8 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         ActivityModules.inject(this);
+
+        messenger.register( this );
     }
 
     /**
@@ -47,7 +50,15 @@ public abstract class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         spiceManager.start(this);
-        messenger.register(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        messenger.register( this );
     }
 
     /**
@@ -78,7 +89,7 @@ public abstract class BaseActivity extends Activity {
      * @return View class object
      */
     @SuppressWarnings( "unchecked" )
-    protected <T> T findView( int viewId ) {
+    protected <T extends View> T findView( int viewId ) {
         return (T) findViewById( viewId );
     }
 

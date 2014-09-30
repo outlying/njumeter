@@ -38,10 +38,7 @@ public final class Messenger {
      * @param subscriber Activity for displaying messages
      */
     public void register( Activity subscriber ) {
-
-        if( !eventBus.isRegistered( subscriber ) ) {
-            eventBus.register( subscriber );
-        }
+        eventBus.register( subscriber );
     }
 
     /**
