@@ -28,7 +28,7 @@ public final class Messenger {
      * @param text of message
      */
     public void message( final String text ) {
-        eventBus.post( Message.create( text ) );
+        message( Message.create( text ) );
     }
 
     /**
@@ -37,7 +37,7 @@ public final class Messenger {
      * @param message to display
      */
     public void message( final Message message) {
-        eventBus.post( message );
+        eventBus.postSticky( message );
     }
 
     /**
@@ -46,7 +46,7 @@ public final class Messenger {
      * @param subscriber Activity for displaying messages
      */
     public void register( Activity subscriber ) {
-        eventBus.register( subscriber );
+        eventBus.registerSticky( subscriber );
     }
 
     /**
