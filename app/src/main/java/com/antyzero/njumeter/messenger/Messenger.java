@@ -12,7 +12,15 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  */
 public final class Messenger {
 
-    private final EventBus eventBus = EventBus.getDefault();
+    private final EventBus eventBus;
+
+    /**
+     * Default constructor
+     */
+    public Messenger() {
+        // Keep separate bus for messages
+        eventBus = new EventBus();
+    }
 
     /**
      * Simple way to provide test information to user
