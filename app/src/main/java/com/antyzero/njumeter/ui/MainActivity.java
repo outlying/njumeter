@@ -64,6 +64,8 @@ public class MainActivity extends BaseActivity {
                 builder.setMessage( getString( R.string.message_confirm_account_not_created ) );
                 builder.setStyle( Message.Style.ERROR );
             }
+
+            messenger.message( builder.build() );
         }
     }
 }
