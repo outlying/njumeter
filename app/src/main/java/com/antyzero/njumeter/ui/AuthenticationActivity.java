@@ -247,6 +247,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
                 builder.setMessage(cause.getMessage());
             }
 
+            if (cause instanceof IllegalStateException) {
+                builder.setMessage(getString(R.string.message_error_website_formatting));
+            }
+
             messenger.message(builder.build());
 
             // Give user another chance
