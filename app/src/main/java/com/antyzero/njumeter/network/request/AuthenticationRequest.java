@@ -139,6 +139,7 @@ public class AuthenticationRequest extends BaseRequest<Boolean> {
         for (String field : FIELDS_ALL) {
 
             if (!map.containsKey(field)) {
+                // TODO add Crashlytics LOGing
                 throw new IllegalStateException("Form does not contain valid fields");
             }
         }
