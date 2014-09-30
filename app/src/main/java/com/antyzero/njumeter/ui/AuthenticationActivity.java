@@ -65,8 +65,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         NjuApplication.get( this ).inject( this );
 
-        messenger.register(this);
-
         setContentView(R.layout.activity_authentication);
 
         button = (Button) findViewById( R.id.button );
@@ -86,6 +84,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     protected void onStart() {
         super.onStart();
         spiceManager.start( this );
+        messenger.register(this);
     }
 
     /**
@@ -93,17 +92,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      */
     @Override
     protected void onStop() {
+        messenger.unregister( this );
         spiceManager.shouldStop();
         super.onStop();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onDestroy() {
-        messenger.unregister( this );
-        super.onDestroy();
     }
 
     /**

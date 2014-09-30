@@ -10,7 +10,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  *
  */
-public class Messenger {
+public final class Messenger {
 
     private final EventBus eventBus = EventBus.getDefault();
 
@@ -21,6 +21,15 @@ public class Messenger {
      */
     public void message( final String text ) {
         eventBus.post( Message.create( text ) );
+    }
+
+    /**
+     * Send fully customized message
+     *
+     * @param message to display
+     */
+    public void message( final Message message) {
+        eventBus.post( message );
     }
 
     /**
@@ -39,7 +48,6 @@ public class Messenger {
      */
     public void unregister( Activity subscriber ) {
         eventBus.unregister( subscriber );
-        Crouton.cancelAllCroutons();
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.antyzero.njumeter.messenger;
 
 /**
- * Created by tornax on 05.09.14.
+ * ...
  */
 public class Message {
 
@@ -14,10 +14,24 @@ public class Message {
     private Message() {
     }
 
+    /**
+     * ...
+     *
+     * @param builder for construction
+     */
+    private Message(Builder builder) {
+
+    }
+
     public CharSequence getText() {
         return text;
     }
 
+    /**
+     *
+     *
+     * @return
+     */
     public Style getStyle() {
         return style;
     }
@@ -51,4 +65,26 @@ public class Message {
     public enum Style {
         DEFAULT
     }
+
+    /**
+     *
+     */
+    public final static class Builder {
+
+        private final String message;
+
+        /**
+         * Default private constructor
+         *
+         * @param message mandatory
+         */
+        private Builder(String message){
+            this.message = message;
+        }
+
+        public Message build(){
+            return new Message(this);
+        }
+    }
+
 }

@@ -36,7 +36,6 @@ public abstract class BaseActivity extends Activity {
 
         ActivityModules.inject(this);
 
-        messenger.register(this);
     }
 
     /**
@@ -45,6 +44,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        messenger.register(this);
         spiceManager.start(this);
     }
 
@@ -54,6 +54,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onStop() {
         spiceManager.shouldStop();
+        messenger.unregister( this );
         super.onStop();
     }
 
@@ -62,7 +63,6 @@ public abstract class BaseActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        messenger.unregister( this );
         super.onDestroy();
     }
 
