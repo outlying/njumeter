@@ -10,15 +10,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
  */
 public final class CroutonMessenger implements Messenger {
 
-    private final EventBus eventBus;
-
-    /**
-     * Default constructor
-     */
-    public CroutonMessenger() {
-        // Keep separate bus for messages
-        eventBus = new EventBus();
-    }
+    private final EventBus eventBus = new EventBus();
 
     /**
      * Send fully customized message
