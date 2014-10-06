@@ -14,12 +14,13 @@ import dagger.Provides;
  * Application module
  */
 @Module(
-        includes = {
-                NetworkModule.class
-        },
         injects = {
                 NjuApplication.class
         },
+        includes = {
+                NetworkModule.class
+        },
+        // Keep to avoid compilation time errors
         library = true
 )
 public class NjuModule {

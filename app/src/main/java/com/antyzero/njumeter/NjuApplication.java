@@ -27,21 +27,18 @@ public final class NjuApplication extends Application {
     }
 
     public void buildObjectGraphAndInject() {
-        objectGraph = ObjectGraph.create(Modules.list(this));
+        objectGraph = ObjectGraph.create(new NjuModule(this));
         objectGraph.inject(this);
     }
 
-    public void inject(Object o) {
-        objectGraph.inject(o);
-    }
-
     /**
-     * Access to application ObjectGraph
+     * TODO
      *
-     * @return ObjectGraph object
+     * @param modules
+     * @return
      */
-    public ObjectGraph getObjectGraph() {
-        return objectGraph;
+    public ObjectGraph createScopedGraph(Object... modules) {
+        return objectGraph.plus(modules);
     }
 
     /**

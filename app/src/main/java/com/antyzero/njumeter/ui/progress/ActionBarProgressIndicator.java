@@ -12,8 +12,10 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
 
     public ActionBarProgressIndicator(Activity activity) {
         this.activity = activity;
-        // TODO Consider exception on false
-        activity.requestWindowFeature(Window.FEATURE_PROGRESS);
+
+        if(!activity.requestWindowFeature(Window.FEATURE_PROGRESS)){
+            throw new IllegalStateException("This indicator has to be created before calling Activity#setContentView()");
+        }
     }
 
     @Override

@@ -22,10 +22,13 @@ import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.network.request.ServerSideException;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
+import com.antyzero.njumeter.ui.progress.ProgressIndicator;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
 import javax.inject.Inject;
+
+import dagger.ObjectGraph;
 
 import static com.antyzero.njumeter.BuildConfig.ACCOUNT_TYPE;
 import static com.antyzero.njumeter.messenger.Message.Style;
@@ -44,7 +47,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Inject
     Messenger messenger;
 
+    @Inject
+    ProgressIndicator progressIndicator;
+
     private Action action;
+
+    private ObjectGraph activityGraph;
 
     Button button;
     EditText editTextUser;
@@ -53,6 +61,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityGraph = NjuApplication.get(this).createScopedGraph(new UiModule(this));
+        activityGraph.inject(this);
 
         if (TextUtils.isEmpty(getIntent().getAction())) {
             throw new IllegalStateException("Missing Intent action, required to start this Activity");
@@ -63,8 +73,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         } catch (Exception e) {
             throw new IllegalArgumentException("Given action is not supported");
         }
-
-        NjuApplication.get(this).inject(this);
 
         setContentView(R.layout.activity_authentication);
 
@@ -96,6 +104,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         messenger.unregister(this);
         spiceManager.shouldStop();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        activityGraph = null;
     }
 
     /**

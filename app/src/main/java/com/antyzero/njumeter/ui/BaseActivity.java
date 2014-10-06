@@ -26,6 +26,8 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
  */
 public abstract class BaseActivity extends Activity {
 
+    private ObjectGraph activityGraph;
+
     @Inject
     SpiceManager spiceManager;
 
@@ -38,7 +40,8 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inject(this);
+        activityGraph = NjuApplication.get(this).createScopedGraph(new UiModule(this));
+        activityGraph.inject(this);
     }
 
     /**
@@ -48,7 +51,7 @@ public abstract class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         spiceManager.start(this);
-        messenger.register( this );
+        messenger.register(this);
     }
 
     /**
@@ -59,6 +62,12 @@ public abstract class BaseActivity extends Activity {
         messenger.unregister(this);
         spiceManager.shouldStop();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        activityGraph = null;
     }
 
     /**
@@ -99,16 +108,5 @@ public abstract class BaseActivity extends Activity {
      */
     protected Messenger getMessenger() {
         return messenger;
-    }
-
-    /**
-     * Inject Activity modules
-     */
-    public static void inject(Activity activity){
-        NjuApplication
-                .get(activity)
-                .getObjectGraph()
-                .plus(new UiModule(activity))
-                .inject(activity);
     }
 }

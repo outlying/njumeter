@@ -15,7 +15,7 @@ import dagger.Provides;
             MainActivity.class,
             AuthenticationActivity.class
         },
-        complete = false,
+        complete = true,
         library = true
 )
 public class NetworkModule {

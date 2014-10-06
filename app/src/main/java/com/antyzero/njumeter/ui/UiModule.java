@@ -17,13 +17,11 @@ import dagger.Provides;
  * Provides UI components
  */
 @Module(
+        addsTo = NjuModule.class,
         injects = {
                 MainActivity.class,
                 AuthenticationActivity.class
-        },
-        addsTo = NjuModule.class,
-        library = true,
-        complete = false
+        }
 )
 public class UiModule {
 
