@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.antyzero.njumeter.BuildConfig;
@@ -25,6 +26,8 @@ public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
 
+    private View containerNoAccount;
+
     /**
      * {@inheritDoc}
      */
@@ -36,12 +39,24 @@ public class MainActivity extends BaseActivity {
         if( savedInstanceState == null ) {
 
             // Check if we have at least one account, if not redirect user to login screen
-            if( AccountManager.get( this ).getAccountsByType( BuildConfig.ACCOUNT_TYPE ).length == 0 ) {
+            if(hasAnyAccounts()) {
                 AuthenticationActivity.startForNewAccountResult( this, REQUEST_CODE_ACCOUNT_CREATE );
             }
         }
 
         setContentView( R.layout.activity_main );
+
+        containerNoAccount = findView(R.id.containerNoAccount);
+    }
+
+    /**
+     * Checks if at least one account is avaiable
+     *
+     * @return {@code true} if account(s) is/are available
+     */
+    private boolean hasAnyAccounts() {
+        return AccountManager.get(this)
+                .getAccountsByType(BuildConfig.ACCOUNT_TYPE).length == 0;
     }
 
     /**
@@ -60,6 +75,9 @@ public class MainActivity extends BaseActivity {
             } else {
                 builder.setMessage( getString( R.string.message_confirm_account_not_created ) );
                 builder.setStyle(Message.Style.ERROR);
+
+                containerNoAccount.setVisibility(View.VISIBLE);
+                // TODO hide others
             }
 
             messenger.message( builder.build() );
