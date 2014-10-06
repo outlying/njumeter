@@ -21,7 +21,8 @@ import dagger.Provides;
         injects = {
                 MainActivity.class,
                 AuthenticationActivity.class
-        }
+        },
+        library = true
 )
 public class UiModule {
 
