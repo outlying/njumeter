@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // TODO hide others
             }
 
-            messenger.message( builder.build() );
+            // messenger.message( builder.build() );
         }
     }
 

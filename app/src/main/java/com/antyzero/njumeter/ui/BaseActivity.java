@@ -28,19 +28,13 @@ public abstract class BaseActivity extends Activity {
 
     private ObjectGraph activityGraph;
 
-    @Inject
-    SpiceManager spiceManager;
-
-    @Inject
-    Messenger messenger;
-
     /**
      * {@inheritDoc}
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityGraph = NjuApplication.get(this).createScopedGraph(new UiModule(this));
+        activityGraph = NjuApplication.get(this).createScopedGraph();
         activityGraph.inject(this);
     }
 
@@ -50,8 +44,6 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        spiceManager.start(this);
-        messenger.register(this);
     }
 
     /**
@@ -59,8 +51,6 @@ public abstract class BaseActivity extends Activity {
      */
     @Override
     protected void onStop() {
-        messenger.unregister(this);
-        spiceManager.shouldStop();
         super.onStop();
     }
 
@@ -77,7 +67,7 @@ public abstract class BaseActivity extends Activity {
      */
     @SuppressWarnings( "UnusedDeclaration" )
     public void onEventMainThread( Message message ) {
-        messenger.process( this, message );
+        //messenger.process( this, message );
     }
 
     /**
@@ -90,23 +80,5 @@ public abstract class BaseActivity extends Activity {
     @SuppressWarnings({"unchecked", "UnusedDeclaration"})
     protected <T extends View> T findView( int viewId ) {
         return (T) findViewById( viewId );
-    }
-
-    /**
-     * Access to SpiceManager for extending classes
-     *
-     * @return SpiceManager object
-     */
-    protected SpiceManager getSpiceManager() {
-        return spiceManager;
-    }
-
-    /**
-     * Access to Messenger for extending classes
-     *
-     * @return SpiceManager object
-     */
-    protected Messenger getMessenger() {
-        return messenger;
     }
 }

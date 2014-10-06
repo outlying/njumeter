@@ -23,11 +23,7 @@ public final class NjuApplication extends Application {
             Crashlytics.start(this);
         }
 
-        buildObjectGraphAndInject();
-    }
-
-    public void buildObjectGraphAndInject() {
-        objectGraph = ObjectGraph.create(new NjuModule(this));
+        objectGraph = ObjectGraph.create();
         objectGraph.inject(this);
     }
 

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -41,15 +40,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     public static final String AUTH_TOKEN_DEFAULT = "000000000000000";
     public static final String AUTH_TOKEN_TYPE = "Default";
 
-    @Inject
-    SpiceManager spiceManager;
-
-    @Inject
-    Messenger messenger;
-
-    @Inject
-    ProgressIndicator progressIndicator;
-
     private Action action;
 
     private ObjectGraph activityGraph;
@@ -59,31 +49,31 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     EditText editTextPassword;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityGraph = NjuApplication.get(this).createScopedGraph(new UiModule(this));
-        activityGraph.inject(this);
+    protected void onCreate( Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
+        activityGraph = NjuApplication.get( this ).createScopedGraph();
+        activityGraph.inject( this );
 
-        if (TextUtils.isEmpty(getIntent().getAction())) {
-            throw new IllegalStateException("Missing Intent action, required to start this Activity");
+        if( TextUtils.isEmpty( getIntent().getAction() ) ) {
+            throw new IllegalStateException( "Missing Intent action, required to start this Activity" );
         }
 
         try {
-            action = Action.valueOf(getIntent().getAction());
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Given action is not supported");
+            action = Action.valueOf( getIntent().getAction() );
+        } catch( Exception e ) {
+            throw new IllegalArgumentException( "Given action is not supported" );
         }
 
-        setContentView(R.layout.activity_authentication);
+        setContentView( R.layout.activity_authentication );
 
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
+        button = (Button) findViewById( R.id.button );
+        button.setOnClickListener( this );
 
-        editTextUser = (EditText) findViewById(R.id.editTextUser);
-        editTextUser.addTextChangedListener(new UserTextWatcher());
+        editTextUser = (EditText) findViewById( R.id.editTextUser );
+        editTextUser.addTextChangedListener( new UserTextWatcher() );
 
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextPassword.addTextChangedListener(new PasswordTextWatcher());
+        editTextPassword = (EditText) findViewById( R.id.editTextPassword );
+        editTextPassword.addTextChangedListener( new PasswordTextWatcher() );
     }
 
     /**
@@ -92,8 +82,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onStart() {
         super.onStart();
-        spiceManager.start(this);
-        messenger.register(this);
+        /*spiceManager.start( this );
+        messenger.register( this );*/
     }
 
     /**
@@ -101,8 +91,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      */
     @Override
     protected void onStop() {
-        messenger.unregister(this);
-        spiceManager.shouldStop();
+        /*messenger.unregister( this );
+        spiceManager.shouldStop();*/
         super.onStop();
     }
 
@@ -118,8 +108,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param message event
      */
     @SuppressWarnings("UnusedDeclaration")
-    public void onEventMainThread(Message message) {
-        messenger.process(this, message);
+    public void onEventMainThread( Message message ) {
+        /*messenger.process( this, message );*/
     }
 
     /**
@@ -128,20 +118,20 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * {@inheritDoc}
      */
     @Override
-    public void onClick(View v) {
+    public void onClick( View v ) {
 
-        setFormEnable(false);
+        setFormEnable( false );
 
         // TODO validation ?
 
         CharSequence user = editTextUser.getText();
         CharSequence password = editTextPassword.getText();
 
-        setProgressBarIndeterminateVisibility(true);
+        setProgressBarIndeterminateVisibility( true );
 
-        spiceManager.execute(
-                new AuthenticationRequest(user, password),
-                new AuthenticationRequestListener());
+        /*spiceManager.execute(
+                new AuthenticationRequest( user, password ),
+                new AuthenticationRequestListener() );*/
     }
 
     /**
@@ -149,10 +139,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      *
      * @param enable new state value
      */
-    private void setFormEnable(boolean enable) {
-        editTextUser.setEnabled(enable);
-        editTextPassword.setEnabled(enable);
-        button.setEnabled(enable);
+    private void setFormEnable( boolean enable ) {
+        editTextUser.setEnabled( enable );
+        editTextPassword.setEnabled( enable );
+        button.setEnabled( enable );
     }
 
     /**
@@ -161,35 +151,35 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param userName
      * @param password
      */
-    private void registerNewAccount(String userName, String password) {
+    private void registerNewAccount( String userName, String password ) {
 
         final Intent intent = new Intent();
 
-        intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, userName);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
-        intent.putExtra(AccountManager.KEY_AUTHTOKEN, AUTH_TOKEN_DEFAULT);
+        intent.putExtra( AccountManager.KEY_ACCOUNT_NAME, userName );
+        intent.putExtra( AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE );
+        intent.putExtra( AccountManager.KEY_AUTHTOKEN, AUTH_TOKEN_DEFAULT );
 
-        final Account account = new Account(userName, ACCOUNT_TYPE);
+        final Account account = new Account( userName, ACCOUNT_TYPE );
 
-        AccountManager accountManager = AccountManager.get(this);
+        AccountManager accountManager = AccountManager.get( this );
 
-        switch (action) {
+        switch( action ) {
 
             case ADD_NEW_ACCOUNT:
-                accountManager.addAccountExplicitly(account, password, null);
-                accountManager.setAuthToken(account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT);
+                accountManager.addAccountExplicitly( account, password, null );
+                accountManager.setAuthToken( account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT );
                 break;
 
             case CHANGE_PASSWORD:
-                accountManager.setPassword(account, password);
+                accountManager.setPassword( account, password );
                 break;
 
             default:
-                throw new UnsupportedOperationException("Unsupported enum Value");
+                throw new UnsupportedOperationException( "Unsupported enum Value" );
         }
 
-        setAccountAuthenticatorResult(intent.getExtras());
-        setResult(RESULT_OK, intent);
+        setAccountAuthenticatorResult( intent.getExtras() );
+        setResult( RESULT_OK, intent );
         finish();
     }
 
@@ -198,11 +188,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      *
      * @param activity require for start
      */
-    public static void startForNewAccountResult(Activity activity, int requestCode) {
+    public static void startForNewAccountResult( Activity activity, int requestCode ) {
 
-        Intent intent = intent(activity, Action.ADD_NEW_ACCOUNT);
+        Intent intent = intent( activity, Action.ADD_NEW_ACCOUNT );
 
-        activity.startActivityForResult(intent, requestCode);
+        activity.startActivityForResult( intent, requestCode );
     }
 
     /**
@@ -211,11 +201,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * @param context required for Intent
      * @return Intent object
      */
-    public static Intent intent(Context context, Action action) {
+    public static Intent intent( Context context, Action action ) {
 
-        final Intent intent = new Intent(context, AuthenticationActivity.class);
+        final Intent intent = new Intent( context, AuthenticationActivity.class );
 
-        intent.setAction(action.name());
+        intent.setAction( action.name() );
 
         return intent;
     }
@@ -226,11 +216,11 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     private class UserTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged(Editable editable) {
+        public void afterTextChanged( Editable editable ) {
 
             final boolean validLength = editable.length() >= 9;
 
-            editTextPassword.setEnabled(validLength);
+            editTextPassword.setEnabled( validLength );
         }
     }
 
@@ -240,9 +230,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     private class PasswordTextWatcher extends SimpleTextWatcher {
 
         @Override
-        public void afterTextChanged(Editable editable) {
+        public void afterTextChanged( Editable editable ) {
 
-            button.setEnabled(!TextUtils.isEmpty(editable));
+            button.setEnabled( !TextUtils.isEmpty( editable ) );
         }
     }
 
@@ -253,39 +243,37 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         @Override
         public void preRequest() {
-            setProgressBarIndeterminateVisibility(false);
+            setProgressBarIndeterminateVisibility( false );
         }
 
         @Override
-        public void onFailure(SpiceException spiceException) {
+        public void onFailure( SpiceException spiceException ) {
 
-            Message.Builder builder = Message.prepare().setStyle(Style.ERROR);
+            Message.Builder builder = Message.prepare().setStyle( Style.ERROR );
 
-            builder.setMessage(getString(R.string.message_error_auth));
+            builder.setMessage( getString( R.string.message_error_auth ) );
 
             Throwable cause = spiceException.getCause();
 
-            if (cause instanceof ServerSideException) {
-                builder.setMessage(cause.getMessage());
+            if( cause instanceof ServerSideException ) {
+                builder.setMessage( cause.getMessage() );
             }
 
-            if (cause instanceof IllegalStateException) {
-                builder.setMessage(getString(R.string.message_error_website_formatting));
+            if( cause instanceof IllegalStateException ) {
+                builder.setMessage( getString( R.string.message_error_website_formatting ) );
             }
-
-            messenger.message(builder.build());
 
             // Give user another chance
-            setFormEnable(true);
+            setFormEnable( true );
         }
 
         @Override
-        public void onSuccess(Boolean result) {
+        public void onSuccess( Boolean result ) {
 
-            final String userName = String.valueOf(editTextUser.getText());
-            final String password = String.valueOf(editTextPassword.getText());
+            final String userName = String.valueOf( editTextUser.getText() );
+            final String password = String.valueOf( editTextPassword.getText() );
 
-            registerNewAccount(userName, password);
+            registerNewAccount( userName, password );
         }
     }
 
