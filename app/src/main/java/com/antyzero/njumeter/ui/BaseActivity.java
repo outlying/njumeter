@@ -34,8 +34,6 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityGraph = NjuApplication.get(this).createScopedGraph();
-        activityGraph.inject(this);
     }
 
     /**

@@ -51,8 +51,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-        activityGraph = NjuApplication.get( this ).createScopedGraph();
-        activityGraph.inject( this );
 
         if( TextUtils.isEmpty( getIntent().getAction() ) ) {
             throw new IllegalStateException( "Missing Intent action, required to start this Activity" );

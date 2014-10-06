@@ -12,8 +12,6 @@ import dagger.ObjectGraph;
  */
 public final class NjuApplication extends Application {
 
-    private ObjectGraph objectGraph;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,18 +21,6 @@ public final class NjuApplication extends Application {
             Crashlytics.start(this);
         }
 
-        objectGraph = ObjectGraph.create();
-        objectGraph.inject(this);
-    }
-
-    /**
-     * TODO
-     *
-     * @param modules
-     * @return
-     */
-    public ObjectGraph createScopedGraph(Object... modules) {
-        return objectGraph.plus(modules);
     }
 
     /**
