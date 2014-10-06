@@ -2,8 +2,8 @@ package com.antyzero.njumeter;
 
 import android.app.Application;
 
-import com.antyzero.njumeter.messenger.MessengerModule;
 import com.antyzero.njumeter.network.NetworkModule;
+import com.antyzero.njumeter.ui.UiModule;
 
 import javax.inject.Singleton;
 
@@ -16,7 +16,7 @@ import dagger.Provides;
 @Module(
         includes = {
                 NetworkModule.class,
-                MessengerModule.class
+                UiModule.class
         },
         injects = {
                 NjuApplication.class

@@ -1,7 +1,6 @@
-package com.antyzero.njumeter.messenger;
+package com.antyzero.njumeter.ui;
 
-import com.antyzero.njumeter.ui.AuthenticationActivity;
-import com.antyzero.njumeter.ui.MainActivity;
+import com.antyzero.njumeter.messenger.Messenger;
 
 import javax.inject.Singleton;
 
@@ -9,17 +8,17 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Injects messenger
+ * Provides UI components
  */
 @Module(
         injects = {
-            MainActivity.class,
-            AuthenticationActivity.class
+                MainActivity.class,
+                AuthenticationActivity.class
         },
         library = true,
         complete = false
 )
-public class MessengerModule {
+public class UiModule {
 
     private Messenger messenger = new Messenger();
 

@@ -39,8 +39,6 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         NjuApplication.get(this).inject(this);
-
-        messenger.register( this );
     }
 
     /**
@@ -50,15 +48,7 @@ public abstract class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         spiceManager.start(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        messenger.register(this);
+        messenger.register( this );
     }
 
     /**
@@ -66,8 +56,8 @@ public abstract class BaseActivity extends Activity {
      */
     @Override
     protected void onStop() {
-        spiceManager.shouldStop();
         messenger.unregister(this);
+        spiceManager.shouldStop();
         super.onStop();
     }
 
