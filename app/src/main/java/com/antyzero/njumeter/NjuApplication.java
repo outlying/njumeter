@@ -36,6 +36,15 @@ public final class NjuApplication extends Application {
     }
 
     /**
+     * Access to application ObjectGraph
+     *
+     * @return ObjectGraph object
+     */
+    public ObjectGraph getObjectGraph() {
+        return objectGraph;
+    }
+
+    /**
      * Access NjuApplication instance
      *
      * @param context for accessing

@@ -3,6 +3,7 @@ package com.antyzero.njumeter.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.messenger.Message;
@@ -37,8 +38,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        NjuApplication.get(this).inject(this);
+        inject(this);
     }
 
     /**
@@ -99,5 +99,16 @@ public abstract class BaseActivity extends Activity {
      */
     protected Messenger getMessenger() {
         return messenger;
+    }
+
+    /**
+     * Inject Activity modules
+     */
+    public static void inject(Activity activity){
+        NjuApplication
+                .get(activity)
+                .getObjectGraph()
+                .plus(new UiModule(activity))
+                .inject(activity);
     }
 }

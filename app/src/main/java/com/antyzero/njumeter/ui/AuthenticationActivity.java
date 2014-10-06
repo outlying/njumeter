@@ -66,8 +66,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         NjuApplication.get(this).inject(this);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
         setContentView(R.layout.activity_authentication);
 
         button = (Button) findViewById(R.id.button);

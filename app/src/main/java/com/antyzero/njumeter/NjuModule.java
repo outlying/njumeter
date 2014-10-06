@@ -15,8 +15,7 @@ import dagger.Provides;
  */
 @Module(
         includes = {
-                NetworkModule.class,
-                UiModule.class
+                NetworkModule.class
         },
         injects = {
                 NjuApplication.class
