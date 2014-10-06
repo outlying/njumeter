@@ -239,7 +239,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      */
     private class AuthenticationRequestListener extends RequestListener<Boolean> {
 
-        // setProgressBarIndeterminateVisibility(true);
+        @Override
+        public void preRequest() {
+            setProgressBarIndeterminateVisibility(false);
+        }
 
         @Override
         public void onFailure(SpiceException spiceException) {
