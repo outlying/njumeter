@@ -22,11 +22,13 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 /**
  * ...
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_ACCOUNT_CREATE = 30471;
 
     private View containerNoAccount;
+
+    private Button buttonAddAccount;
 
     /**
      * {@inheritDoc}
@@ -40,13 +42,22 @@ public class MainActivity extends BaseActivity {
 
             // Check if we have at least one account, if not redirect user to login screen
             if(hasAnyAccounts()) {
-                AuthenticationActivity.startForNewAccountResult( this, REQUEST_CODE_ACCOUNT_CREATE );
+                startAccountCreationActivity();
             }
         }
 
         setContentView( R.layout.activity_main );
 
         containerNoAccount = findView(R.id.containerNoAccount);
+        buttonAddAccount = findView(R.id.buttonAddAccount);
+        buttonAddAccount.setOnClickListener(this);
+    }
+
+    /**
+     * Starts AuthenticationActivity for new account
+     */
+    private void startAccountCreationActivity() {
+        AuthenticationActivity.startForNewAccountResult(this, REQUEST_CODE_ACCOUNT_CREATE);
     }
 
     /**
@@ -81,6 +92,23 @@ public class MainActivity extends BaseActivity {
             }
 
             messenger.message( builder.build() );
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.buttonAddAccount:
+                startAccountCreationActivity();
+                break;
+
+            default:
+                throw new UnsupportedOperationException("Click is not yet implemented");
         }
     }
 }
