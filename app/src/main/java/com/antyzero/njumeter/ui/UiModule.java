@@ -1,7 +1,7 @@
 package com.antyzero.njumeter.ui;
 
-import com.antyzero.njumeter.messenger.CroutonMessenger;
 import com.antyzero.njumeter.messenger.Messenger;
+import com.antyzero.njumeter.messenger.ToastMessenger;
 
 import javax.inject.Singleton;
 
@@ -24,6 +24,6 @@ public class UiModule {
     @Provides
     @Singleton
     public Messenger providesMessenger() {
-        return new CroutonMessenger();
+        return new ToastMessenger();
     }
 }
