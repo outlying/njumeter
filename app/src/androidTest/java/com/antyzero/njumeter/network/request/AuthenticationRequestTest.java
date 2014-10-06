@@ -27,7 +27,7 @@ public class AuthenticationRequestTest extends RequestTestCase {
         assertThat(exceptionOccurred).isTrue();
     }
 
-    @FlakyTest( tolerance = 3 )
+    /*@FlakyTest( tolerance = 3 )
     public void testLoginWithValidUser() throws Exception {
 
         AuthenticationRequest request = new AuthenticationRequest("123456789", "password");
@@ -35,5 +35,5 @@ public class AuthenticationRequestTest extends RequestTestCase {
         request.setRestTemplate(getRestTemplate());
 
         request.loadDataFromNetwork();
-    }
+    }*/
 }
