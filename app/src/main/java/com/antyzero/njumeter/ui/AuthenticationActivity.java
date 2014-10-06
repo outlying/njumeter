@@ -21,7 +21,6 @@ import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.network.request.ServerSideException;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
-import com.antyzero.njumeter.ui.progress.ProgressIndicator;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
@@ -44,6 +43,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
     private ObjectGraph activityGraph;
 
+    @Inject
+    Messenger messenger;
+
+    @Inject
+    SpiceManager spiceManager;
+
     Button button;
     EditText editTextUser;
     EditText editTextPassword;
@@ -61,6 +66,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         } catch( Exception e ) {
             throw new IllegalArgumentException( "Given action is not supported" );
         }
+
+        activityGraph = NjuApplication.get( this ).createScopedGraph( new ActivityModule( this ) );
+        activityGraph.inject( this );
 
         setContentView( R.layout.activity_authentication );
 
@@ -80,8 +88,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Override
     protected void onStart() {
         super.onStart();
-        /*spiceManager.start( this );
-        messenger.register( this );*/
+        spiceManager.start( this );
+        messenger.register( this );
     }
 
     /**
@@ -89,8 +97,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      */
     @Override
     protected void onStop() {
-        /*messenger.unregister( this );
-        spiceManager.shouldStop();*/
+        messenger.unregister( this );
+        spiceManager.shouldStop();
         super.onStop();
     }
 
@@ -107,7 +115,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      */
     @SuppressWarnings("UnusedDeclaration")
     public void onEventMainThread( Message message ) {
-        /*messenger.process( this, message );*/
+        messenger.process( this, message );
     }
 
     /**
@@ -127,9 +135,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         setProgressBarIndeterminateVisibility( true );
 
-        /*spiceManager.execute(
+        spiceManager.execute(
                 new AuthenticationRequest( user, password ),
-                new AuthenticationRequestListener() );*/
+                new AuthenticationRequestListener() );
     }
 
     /**
@@ -260,6 +268,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
             if( cause instanceof IllegalStateException ) {
                 builder.setMessage( getString( R.string.message_error_website_formatting ) );
             }
+
+            messenger.message( builder.build() );
 
             // Give user another chance
             setFormEnable( true );

@@ -3,23 +3,14 @@ package com.antyzero.njumeter.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
-import com.antyzero.njumeter.network.NetworkModule;
-import com.antyzero.njumeter.network.SpiceService;
-import com.google.common.collect.Lists;
-import com.octo.android.robospice.SpiceManager;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.ObjectGraph;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 /**
  * BaseActivity created to provide some common behaviour for all activities in this application
@@ -28,12 +19,17 @@ public abstract class BaseActivity extends Activity {
 
     private ObjectGraph activityGraph;
 
+    @Inject
+    Messenger messenger;
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate( savedInstanceState );
+        activityGraph = NjuApplication.get( this ).createScopedGraph( new ActivityModule( this ) );
+        activityGraph.inject( this );
     }
 
     /**
@@ -42,6 +38,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        messenger.register( this );
     }
 
     /**
@@ -49,6 +46,7 @@ public abstract class BaseActivity extends Activity {
      */
     @Override
     protected void onStop() {
+        messenger.unregister( this );
         super.onStop();
     }
 
@@ -65,7 +63,7 @@ public abstract class BaseActivity extends Activity {
      */
     @SuppressWarnings( "UnusedDeclaration" )
     public void onEventMainThread( Message message ) {
-        //messenger.process( this, message );
+        messenger.process( this, message );
     }
 
     /**
@@ -78,5 +76,14 @@ public abstract class BaseActivity extends Activity {
     @SuppressWarnings({"unchecked", "UnusedDeclaration"})
     protected <T extends View> T findView( int viewId ) {
         return (T) findViewById( viewId );
+    }
+
+    /**
+     * Messenger accessor
+     *
+     * @return Messenger object
+     */
+    public Messenger getMessenger() {
+        return messenger;
     }
 }

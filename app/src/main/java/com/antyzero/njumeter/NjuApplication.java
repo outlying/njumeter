@@ -3,6 +3,7 @@ package com.antyzero.njumeter;
 import android.app.Application;
 import android.content.Context;
 
+import com.antyzero.njumeter.ui.ActivityModule;
 import com.crashlytics.android.Crashlytics;
 
 import dagger.ObjectGraph;
@@ -11,6 +12,8 @@ import dagger.ObjectGraph;
  *
  */
 public final class NjuApplication extends Application {
+
+    private ObjectGraph objectGraph;
 
     @Override
     public void onCreate() {
@@ -21,6 +24,18 @@ public final class NjuApplication extends Application {
             Crashlytics.start(this);
         }
 
+        objectGraph = ObjectGraph.create( new NjuModule( this ) );
+        objectGraph.inject( this );
+    }
+
+    /**
+     *
+     *
+     * @param modules
+     * @return
+     */
+    public ObjectGraph createScopedGraph( Object... modules ) {
+        return objectGraph.plus( modules );
     }
 
     /**

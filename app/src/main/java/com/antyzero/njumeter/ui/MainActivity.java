@@ -12,9 +12,12 @@ import android.widget.Button;
 import com.antyzero.njumeter.BuildConfig;
 import com.antyzero.njumeter.R;
 import com.antyzero.njumeter.messenger.Message;
+import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+
+import javax.inject.Inject;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -29,6 +32,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private View containerNoAccount;
 
     private Button buttonAddAccount;
+
+    @Inject
+    protected Messenger messenger;
 
     /**
      * {@inheritDoc}
@@ -91,7 +97,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // TODO hide others
             }
 
-            // messenger.message( builder.build() );
+            getMessenger().message( builder.build() );
         }
     }
 
