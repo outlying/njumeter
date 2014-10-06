@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -64,6 +65,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         }
 
         NjuApplication.get(this).inject(this);
+
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         setContentView(R.layout.activity_authentication);
 
@@ -121,6 +124,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         CharSequence user = editTextUser.getText();
         CharSequence password = editTextPassword.getText();
+
+        setProgressBarIndeterminateVisibility(true);
 
         spiceManager.execute(
                 new AuthenticationRequest(user, password),
@@ -233,6 +238,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
      * Listen for login response
      */
     private class AuthenticationRequestListener extends RequestListener<Boolean> {
+
+        // setProgressBarIndeterminateVisibility(true);
 
         @Override
         public void onFailure(SpiceException spiceException) {

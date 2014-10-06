@@ -9,18 +9,28 @@ public abstract class RequestListener<T> implements com.octo.android.robospice.r
 
     @Override
     public final void onRequestFailure( SpiceException spiceException ) {
+        preRequest();
         onFailure(spiceException);
         postRequest();
     }
 
     @Override
     public final void onRequestSuccess( T t ) {
+        preRequest();
         onSuccess(t);
+        postRequest();
     }
 
     public abstract void onFailure( SpiceException spiceException );
 
     public abstract void onSuccess( T t );
+
+    /**
+     * Override if some kind of action is needed before request is done regarding it success or failure
+     */
+    public void preRequest() {
+
+    }
 
     /**
      * Override if some kind of action is needed after request is done regarding it success or failure
