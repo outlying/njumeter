@@ -11,11 +11,14 @@ import dagger.Provides;
 /**
  * Injects messenger
  */
-@Module(injects = {
-        MainActivity.class,
-        AuthenticationActivity.class},
-        complete = false,
-        library = true)
+@Module(
+        injects = {
+            MainActivity.class,
+            AuthenticationActivity.class
+        },
+        library = true,
+        complete = false
+)
 public class MessengerModule {
 
     private Messenger messenger = new Messenger();

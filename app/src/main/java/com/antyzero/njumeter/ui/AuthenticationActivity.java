@@ -168,7 +168,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
                 break;
 
             default:
-                throw new IllegalStateException("Unsupported enum Value");
+                throw new UnsupportedOperationException("Unsupported enum Value");
         }
 
         setAccountAuthenticatorResult(intent.getExtras());

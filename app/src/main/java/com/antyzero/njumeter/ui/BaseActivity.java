@@ -38,7 +38,7 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityModules.inject(this);
+        NjuApplication.get(this).inject(this);
 
         messenger.register( this );
     }

@@ -10,11 +10,14 @@ import dagger.Provides;
 /**
  * Provides network components
  */
-@Module(injects = {
-        MainActivity.class,
-        AuthenticationActivity.class},
+@Module(
+        injects = {
+            MainActivity.class,
+            AuthenticationActivity.class
+        },
         complete = false,
-        library = true)
+        library = true
+)
 public class NetworkModule {
 
     @Provides

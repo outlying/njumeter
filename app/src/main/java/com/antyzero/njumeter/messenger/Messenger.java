@@ -23,15 +23,6 @@ public final class Messenger {
     }
 
     /**
-     * Simple way to provide test information to user
-     *
-     * @param text of message
-     */
-    public void message( final String text ) {
-        message( Message.create( text ) );
-    }
-
-    /**
      * Send fully customized message
      *
      * @param message to display

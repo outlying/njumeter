@@ -35,6 +35,12 @@ public final class NjuApplication extends Application {
         objectGraph.inject(o);
     }
 
+    /**
+     * Access NjuApplication instance
+     *
+     * @param context for accessing
+     * @return NjuApplication object
+     */
     public static NjuApplication get(Context context) {
         return (NjuApplication) context.getApplicationContext();
     }
