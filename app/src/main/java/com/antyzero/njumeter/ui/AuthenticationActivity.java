@@ -21,6 +21,7 @@ import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.network.request.ServerSideException;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
+import com.antyzero.njumeter.ui.progress.ProgressIndicator;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 
@@ -48,6 +49,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
     @Inject
     SpiceManager spiceManager;
+
+    @Inject
+    ProgressIndicator progressIndicator;
 
     Button button;
     EditText editTextUser;
@@ -128,12 +132,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         setFormEnable( false );
 
+        progressIndicator.showProgress();
+
         // TODO validation ?
 
         CharSequence user = editTextUser.getText();
         CharSequence password = editTextPassword.getText();
-
-        setProgressBarIndeterminateVisibility( true );
 
         spiceManager.execute(
                 new AuthenticationRequest( user, password ),
@@ -249,7 +253,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         @Override
         public void preRequest() {
-            setProgressBarIndeterminateVisibility( false );
+            progressIndicator.hideProgress();
         }
 
         @Override
