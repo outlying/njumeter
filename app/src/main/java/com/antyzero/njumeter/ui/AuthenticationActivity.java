@@ -76,9 +76,6 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         setContentView( R.layout.activity_authentication );
 
-        // TODO delete
-        progressIndicator.showProgress();
-
         button = (Button) findViewById( R.id.button );
         button.setOnClickListener( this );
 
