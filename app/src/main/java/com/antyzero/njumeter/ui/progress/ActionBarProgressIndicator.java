@@ -1,5 +1,6 @@
 package com.antyzero.njumeter.ui.progress;
 
+import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.view.Gravity;
@@ -60,6 +61,8 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
         progressBar.setVisibility(View.INVISIBLE);
 
         content = (FrameLayout) activity.findViewById(android.R.id.content);
+        content.setLayoutTransition(new LayoutTransition());
+        content.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
     }
 
     @Override

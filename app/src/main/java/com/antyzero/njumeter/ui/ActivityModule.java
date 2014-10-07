@@ -33,6 +33,7 @@ public class ActivityModule {
         return new ToastMessenger();
     }
 
+    // TODO move it to another module
     @Provides
     public SpiceManager providesSpiceManager(){
         return new SpiceManager( SpiceService.class );
