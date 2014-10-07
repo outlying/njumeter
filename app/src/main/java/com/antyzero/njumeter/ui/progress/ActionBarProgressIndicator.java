@@ -1,8 +1,11 @@
 package com.antyzero.njumeter.ui.progress;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -25,10 +28,12 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
 
         LAYOUT_PARAMS = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                300); // FrameLayout.LayoutParams.WRAP_CONTENT
+                FrameLayout.LayoutParams.WRAP_CONTENT);
 
-        LAYOUT_PARAMS.gravity = Gravity.TOP;
+        LAYOUT_PARAMS.gravity = Gravity.TOP | Gravity.START;
     }
+
+    private final FrameLayout content;
 
     /**
      *
@@ -38,33 +43,35 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
     public ActionBarProgressIndicator( Activity activity ) {
 
         SmoothProgressDrawable indeterminateDrawable = new SmoothProgressDrawable.Builder(activity)
-                .color(0xff0000)
-                .interpolator(new AccelerateInterpolator())
-                .sectionsCount(4)
-                .separatorLength(8)         //You should use Resources#getDimensionPixelSize
-                .strokeWidth(8f)            //You should use Resources#getDimension
-                .speed(2f)                 //2 times faster
-                .progressiveStartSpeed(2)
-                .reversed(false)
-                .mirrorMode(false)
-                .progressiveStart(true)
                 .build();
 
         progressBar = new ProgressBar(activity);
+        progressBar.setBackgroundColor(Color.CYAN);
         progressBar.setIndeterminate(true);
         progressBar.setIndeterminateDrawable(indeterminateDrawable);
 
-        final FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
-        content.addView(progressBar, LAYOUT_PARAMS);
+        content = (FrameLayout) activity.findViewById(android.R.id.content);
     }
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+
+        if( progressBar.getParent() == null ) {
+            content.addView(progressBar, LAYOUT_PARAMS);
+        }
+
+        content.bringChildToFront(progressBar);
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+            content.requestLayout();
+            content.invalidate();
+        }
+
+        progressBar.setVisibility( View.VISIBLE );
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.INVISIBLE);
+
     }
 }
