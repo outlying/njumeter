@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.GridLayoutAnimationController;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
