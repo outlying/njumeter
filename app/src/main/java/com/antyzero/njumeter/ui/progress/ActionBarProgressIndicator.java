@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+
+import com.antyzero.njumeter.R;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
@@ -17,7 +20,7 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
 
     private final Activity activity;
 
-    private final ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     private static final FrameLayout.LayoutParams LAYOUT_PARAMS;
 
@@ -33,7 +36,6 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
         LAYOUT_PARAMS.gravity = Gravity.TOP;
     }
 
-    private final FrameLayout content;
     private final SmoothProgressDrawable indeterminateDrawable;
 
     /**
@@ -44,37 +46,24 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
     public ActionBarProgressIndicator( Activity activity ) {
         this.activity = activity;
 
-        activity.requestWindowFeature(Window.FEATURE_PROGRESS);
-
-        progressBar = new ProgressBar( activity );
-        progressBar.setBackgroundColor(Color.CYAN);
-
         indeterminateDrawable = new SmoothProgressDrawable.Builder(activity)
                 .colors(new int[]{Color.BLACK, Color.GREEN, Color.RED})
                 .build();
-
-        progressBar.setIndeterminateDrawable(indeterminateDrawable);
-
-        content = (FrameLayout) activity.findViewById(android.R.id.content);
-        content.addView(progressBar, LAYOUT_PARAMS);
     }
 
     @Override
     public void showProgress() {
 
-        content.bringChildToFront(progressBar);
-
-        // On lower versions this is required by system after bringChildToFront()
-        if( Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT ){
-            content.requestLayout();
-            content.invalidate();
+        if(progressBar == null) {
+            progressBar = (ProgressBar) activity.findViewById(R.id.progressBar);
+            progressBar.setIndeterminateDrawable(indeterminateDrawable);
         }
 
-        indeterminateDrawable.start();
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }
