@@ -30,7 +30,7 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
 
-        LAYOUT_PARAMS.gravity = Gravity.TOP | Gravity.START;
+        LAYOUT_PARAMS.gravity = Gravity.TOP;
     }
 
     private final FrameLayout content;
