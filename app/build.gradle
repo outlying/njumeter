@@ -88,6 +88,14 @@ android {
 dependencies {
 
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+    
+    // Internal dependencies
+
+    def domainLayer = project(':domain')
+
+    compile domainLayer
+
+    // External dependencies
 
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.3'
     compile 'com.octo.android.robospice:robospice-spring-android:1.4.12'

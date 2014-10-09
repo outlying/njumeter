@@ -3,7 +3,6 @@ package com.antyzero.njumeter;
 import android.app.Application;
 import android.content.Context;
 
-import com.antyzero.njumeter.ui.ActivityModule;
 import com.crashlytics.android.Crashlytics;
 
 import dagger.ObjectGraph;

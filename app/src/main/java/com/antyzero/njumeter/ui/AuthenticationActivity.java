@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +22,12 @@ import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.network.request.ServerSideException;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
+import com.antyzero.njumeter.ui.inputfilter.MobilePhoneNumberInputFilter;
 import com.antyzero.njumeter.ui.progress.ProgressIndicator;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -57,6 +61,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     EditText editTextUser;
     EditText editTextPassword;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -74,16 +81,25 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         activityGraph = NjuApplication.get( this ).createScopedGraph( new ActivityModule( this ) );
         activityGraph.inject( this );
 
-        setContentView( R.layout.activity_authentication );
+        setContentView(R.layout.activity_authentication);
 
         button = (Button) findViewById( R.id.button );
-        button.setOnClickListener( this );
-
-        editTextUser = (EditText) findViewById( R.id.editTextUser );
-        editTextUser.addTextChangedListener( new UserTextWatcher() );
+        button.setOnClickListener(this);
 
         editTextPassword = (EditText) findViewById( R.id.editTextPassword );
         editTextPassword.addTextChangedListener( new PasswordTextWatcher() );
+
+        editTextUser = (EditText) findViewById( R.id.editTextUser );
+        editTextUser.addTextChangedListener(new UserTextWatcher());
+
+        // TODO it might not work
+
+        InputFilter[] inputFilters = new InputFilter[]{
+
+        };
+
+
+        editTextUser.setFilters( inputFilters );
     }
 
     /**
@@ -106,6 +122,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         super.onStop();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -197,7 +216,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         messenger.message( builder.build() );
 
-        setAccountAuthenticatorResult( intent.getExtras() );
+        setAccountAuthenticatorResult(intent.getExtras());
         setResult( RESULT_OK, intent );
         finish();
     }
@@ -237,6 +256,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         @Override
         public void afterTextChanged( Editable editable ) {
 
+            // TODO magic number warning !
             final boolean validLength = editable.length() >= 9;
 
             editTextPassword.setEnabled( validLength );
