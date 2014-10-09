@@ -25,10 +25,10 @@ public class ArrayUtils {
         int bLen = array2.length;
 
         @SuppressWarnings("unchecked")
-        T[] C = (T[]) Array.newInstance(array1.getClass().getComponentType(), aLen + bLen);
-        System.arraycopy(array1, 0, C, 0, aLen);
-        System.arraycopy(array2, 0, C, aLen, bLen);
+        T[] result = (T[]) Array.newInstance(array1.getClass().getComponentType(), aLen + bLen);
+        System.arraycopy(array1, 0, result, 0, aLen);
+        System.arraycopy(array2, 0, result, aLen, bLen);
 
-        return C;
+        return result;
     }
 }

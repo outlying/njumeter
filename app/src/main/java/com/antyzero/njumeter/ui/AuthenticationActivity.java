@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.R;
+import com.antyzero.njumeter.domain.tools.ArrayUtils;
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
@@ -92,12 +93,10 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         editTextUser = (EditText) findViewById( R.id.editTextUser );
         editTextUser.addTextChangedListener(new UserTextWatcher());
 
-        // TODO it might not work
-
-        InputFilter[] inputFilters = new InputFilter[]{
-
-        };
-
+        // Join existing filters (provided by XML) with new ones
+        InputFilter[] inputFilters = ArrayUtils.join(
+                editTextUser.getFilters(),
+                new InputFilter[]{new MobilePhoneNumberInputFilter()});
 
         editTextUser.setFilters( inputFilters );
     }

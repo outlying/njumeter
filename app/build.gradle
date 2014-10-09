@@ -88,7 +88,7 @@ android {
 dependencies {
 
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
-    
+
     // Internal dependencies
 
     def domainLayer = project(':domain')
