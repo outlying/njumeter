@@ -11,6 +11,9 @@ import static org.assertj.android.api.Assertions.assertThat;
 
 public class AuthenticationActivityTest extends ActivityInstrumentationTestCase2<AuthenticationActivity> {
 
+    private static final String PHONE_NUMBER = "602999999";
+    private static final String PASSWORD = "password";
+
     public AuthenticationActivityTest() {
         super(AuthenticationActivity.class);
     }
@@ -45,17 +48,17 @@ public class AuthenticationActivityTest extends ActivityInstrumentationTestCase2
         assertThat(getActivity().button).isDisabled();
 
         // Partly provided phone number should not change enable state
-        getActivity().editTextUser.setText("12345");
+        getActivity().editTextUser.setText(PHONE_NUMBER.substring(0,4));
 
         assertThat(getActivity().editTextPassword).isDisabled();
 
         // Valid full length phone number should enable password input
-        getActivity().editTextUser.setText("123456789");
+        getActivity().editTextUser.setText(PHONE_NUMBER);
 
         assertThat(getActivity().editTextPassword).isEnabled();
 
         // Non empty password should enable login button
-        getActivity().editTextPassword.setText("password");
+        getActivity().editTextPassword.setText(PASSWORD);
 
         assertThat(getActivity().button).isEnabled();
 
