@@ -188,6 +188,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
             case CHANGE_PASSWORD:
                 accountManager.setPassword( account, password );
+                // TODO add message about password update
                 break;
 
             default:
