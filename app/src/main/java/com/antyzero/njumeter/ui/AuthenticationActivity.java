@@ -96,7 +96,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         // Join existing filters (provided by XML) with new ones
         InputFilter[] inputFilters = ArrayUtils.join(
                 editTextUser.getFilters(),
-                new InputFilter[]{new MobilePhoneNumberInputFilter()});
+                new InputFilter[]{new MobilePhoneNumberInputFilter(new PhoneNumberInputListener())});
 
         editTextUser.setFilters( inputFilters );
     }
@@ -271,6 +271,22 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         public void afterTextChanged( Editable editable ) {
 
             button.setEnabled( !TextUtils.isEmpty( editable ) );
+        }
+    }
+
+    /**
+     * Implements behaviour on bad number input, check MobilePhoneNumberInputFilter for details
+     */
+    private class PhoneNumberInputListener implements MobilePhoneNumberInputFilter.InputListener {
+
+        @Override
+        public void inputCorrect(boolean correct) {
+
+            if(!correct){
+                editTextUser.setError(getString(R.string.edittext_error_invalid_number));
+            } else {
+                editTextUser.setError(null);
+            }
         }
     }
 
