@@ -173,11 +173,17 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         AccountManager accountManager = AccountManager.get( this );
 
+        Message.Builder builder = Message.prepare();
+
+        builder.setStyle(Message.Style.CONFIRM);
+
         switch( action ) {
 
             case ADD_NEW_ACCOUNT:
                 accountManager.addAccountExplicitly( account, password, null );
                 accountManager.setAuthToken( account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT );
+
+                builder.setMessage(getString(R.string.message_confirm_account_created));
                 break;
 
             case CHANGE_PASSWORD:
@@ -187,6 +193,8 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
             default:
                 throw new UnsupportedOperationException( "Unsupported enum Value" );
         }
+
+        messenger.message( builder.build() );
 
         setAccountAuthenticatorResult( intent.getExtras() );
         setResult( RESULT_OK, intent );
