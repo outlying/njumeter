@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.GridLayoutAnimationController;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -39,9 +37,9 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
     private final FrameLayout content;
 
     /**
+     * Construct indicator, some initialization
      *
-     *
-     * @param activity
+     * @param activity required for creation of UI components
      */
     public ActionBarProgressIndicator( Activity activity ) {
 
@@ -65,10 +63,13 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
         content.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showProgress() {
 
-        // Make sure that ProgressBar isn't already included
+        // If progress is not added, do it
         if( progressBar.getParent() == null ) {
             content.addView(progressBar, LAYOUT_PARAMS);
         }
@@ -76,6 +77,9 @@ public final class ActionBarProgressIndicator implements ProgressIndicator {
         progressBar.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.INVISIBLE);
