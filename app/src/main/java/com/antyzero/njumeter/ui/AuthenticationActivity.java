@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,14 +16,19 @@ import android.widget.EditText;
 
 import com.antyzero.njumeter.NjuApplication;
 import com.antyzero.njumeter.R;
+import com.antyzero.njumeter.domain.tools.ArrayUtils;
 import com.antyzero.njumeter.messenger.Message;
 import com.antyzero.njumeter.messenger.Messenger;
 import com.antyzero.njumeter.network.request.AuthenticationRequest;
 import com.antyzero.njumeter.network.request.RequestListener;
 import com.antyzero.njumeter.network.request.ServerSideException;
 import com.antyzero.njumeter.tools.SimpleTextWatcher;
+import com.antyzero.njumeter.ui.inputfilter.MobilePhoneNumberInputFilter;
+import com.antyzero.njumeter.ui.progress.ProgressIndicator;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -49,10 +55,16 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     @Inject
     SpiceManager spiceManager;
 
+    @Inject
+    ProgressIndicator progressIndicator;
+
     Button button;
     EditText editTextUser;
     EditText editTextPassword;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -70,16 +82,23 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         activityGraph = NjuApplication.get( this ).createScopedGraph( new ActivityModule( this ) );
         activityGraph.inject( this );
 
-        setContentView( R.layout.activity_authentication );
+        setContentView(R.layout.activity_authentication);
 
         button = (Button) findViewById( R.id.button );
-        button.setOnClickListener( this );
-
-        editTextUser = (EditText) findViewById( R.id.editTextUser );
-        editTextUser.addTextChangedListener( new UserTextWatcher() );
+        button.setOnClickListener(this);
 
         editTextPassword = (EditText) findViewById( R.id.editTextPassword );
         editTextPassword.addTextChangedListener( new PasswordTextWatcher() );
+
+        editTextUser = (EditText) findViewById( R.id.editTextUser );
+        editTextUser.addTextChangedListener(new UserTextWatcher());
+
+        // Join existing filters (provided by XML) with new ones
+        InputFilter[] inputFilters = ArrayUtils.join(
+                editTextUser.getFilters(),
+                new InputFilter[]{new MobilePhoneNumberInputFilter(new PhoneNumberInputListener())});
+
+        editTextUser.setFilters( inputFilters );
     }
 
     /**
@@ -102,6 +121,9 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         super.onStop();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -128,12 +150,12 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         setFormEnable( false );
 
+        progressIndicator.showProgress();
+
         // TODO validation ?
 
         CharSequence user = editTextUser.getText();
         CharSequence password = editTextPassword.getText();
-
-        setProgressBarIndeterminateVisibility( true );
 
         spiceManager.execute(
                 new AuthenticationRequest( user, password ),
@@ -169,22 +191,31 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
 
         AccountManager accountManager = AccountManager.get( this );
 
+        Message.Builder builder = Message.prepare();
+
+        builder.setStyle(Message.Style.CONFIRM);
+
         switch( action ) {
 
             case ADD_NEW_ACCOUNT:
                 accountManager.addAccountExplicitly( account, password, null );
                 accountManager.setAuthToken( account, AUTH_TOKEN_TYPE, AUTH_TOKEN_DEFAULT );
+
+                builder.setMessage(getString(R.string.message_confirm_account_created));
                 break;
 
             case CHANGE_PASSWORD:
                 accountManager.setPassword( account, password );
+                // TODO add message about password update
                 break;
 
             default:
                 throw new UnsupportedOperationException( "Unsupported enum Value" );
         }
 
-        setAccountAuthenticatorResult( intent.getExtras() );
+        messenger.message( builder.build() );
+
+        setAccountAuthenticatorResult(intent.getExtras());
         setResult( RESULT_OK, intent );
         finish();
     }
@@ -224,6 +255,7 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
         @Override
         public void afterTextChanged( Editable editable ) {
 
+            // TODO magic number warning !
             final boolean validLength = editable.length() >= 9;
 
             editTextPassword.setEnabled( validLength );
@@ -243,13 +275,29 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity impleme
     }
 
     /**
+     * Implements behaviour on bad number input, check MobilePhoneNumberInputFilter for details
+     */
+    private class PhoneNumberInputListener implements MobilePhoneNumberInputFilter.InputListener {
+
+        @Override
+        public void inputCorrect(boolean correct) {
+
+            if(!correct){
+                editTextUser.setError(getString(R.string.edittext_error_invalid_number));
+            } else {
+                editTextUser.setError(null);
+            }
+        }
+    }
+
+    /**
      * Listen for login response
      */
     private class AuthenticationRequestListener extends RequestListener<Boolean> {
 
         @Override
         public void preRequest() {
-            setProgressBarIndeterminateVisibility( false );
+            progressIndicator.hideProgress();
         }
 
         @Override

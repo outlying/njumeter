@@ -86,10 +86,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             Message.Builder builder = Message.prepare();
 
-            if( resultCode == Activity.RESULT_OK ) {
-                builder.setMessage( getString( R.string.message_confirm_account_created ) );
-                builder.setStyle( Message.Style.CONFIRM );
-            } else {
+            if( resultCode != Activity.RESULT_OK ) {
                 builder.setMessage( getString( R.string.message_confirm_account_not_created ) );
                 builder.setStyle(Message.Style.ERROR);
 

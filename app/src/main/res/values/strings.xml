@@ -10,4 +10,6 @@
     <string name="message_confirm_account_created">Konto utworzone</string>
     <string name="message_error_website_formatting">Błąd komunikacji z serwerem</string>
 
+    <string name="edittext_error_invalid_number">Numer telefonu musi zaczynać się od: 50, 51, 53, 57, 60, 66, 69, 72, 73, 78, 79, 88</string>
+
 </resources>
